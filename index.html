@@ -12,10 +12,10 @@
 <meta property="og:type" content="website" />
 
 <!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* ROOT COLORS (Palette A3 – Sky Blue + Royal Blue) */
+/* ROOT COLORS */
 :root {
   --blue-sky: #38bdf8;
   --blue-royal: #1d4ed8;
@@ -23,8 +23,6 @@
   --text-light: #1d1d1f;
   --bg-light: #f8fafc;
   --bg-dark: #0a0e1a;
-  --glass-light: rgba(255,255,255,0.45);
-  --glass-dark: rgba(255,255,255,0.08);
   --border-light: rgba(0,0,0,0.1);
   --border-dark: rgba(255,255,255,0.15);
 }
@@ -35,127 +33,118 @@ html {
 
 body {
   margin: 0;
-  font-family: "Inter", "DM Sans", sans-serif;
+  font-family: "Inter", sans-serif;
   background: var(--bg-light);
   color: var(--text-light);
   transition: background 0.3s ease, color 0.3s ease;
   line-height: 1.7;
 }
 
-.dark-mode body {
+.dark body {
   background: var(--bg-dark);
   color: var(--text-dark);
 }
 
-/* NAVIGATION – Sticky Blur (M1) */
+/* NAVIGATION – sticky, semi-transparent */
 nav {
   position: fixed;
   top: 0;
   width: 100%;
-  backdrop-filter: blur(14px);
-  background: rgba(255,255,255,0.55);
   padding: 10px 20px;
-  z-index: 999;
+  background: rgba(255,255,255,0.7);
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid var(--border-light);
+  z-index: 999;
+  backdrop-filter: blur(8px);
 }
 
-.dark-mode nav {
-  background: rgba(15, 23, 42, 0.55);
+.dark nav {
+  background: rgba(15, 23, 42, 0.45);
   border-bottom-color: var(--border-dark);
 }
 
-nav .left,
-nav .right {
-  display: flex;
-  gap: 14px;
-  align-items: center;
-}
-
-nav a {
-  font-weight: 600;
-  color: var(--text-light);
+/* NAV LINKS */
+nav .left a {
+  margin-right: 14px;
   text-decoration: none;
+  color: var(--text-light);
+  font-weight: 600;
 }
 
-.dark-mode nav a {
+.dark nav .left a {
   color: var(--text-dark);
 }
 
+/* NAV BUTTONS */
 nav button {
-  padding: 8px 14px;
+  padding: 7px 14px;
   border: none;
   border-radius: 999px;
   background: var(--blue-royal);
   color: white;
-  cursor: pointer;
   font-weight: 600;
-  transition: 0.2s;
+  cursor: pointer;
 }
 
 nav button:hover {
-  background: #1e3aa9;
+  opacity: 0.85;
 }
 
-/* HERO */
+/* HERO – same as v2.0 */
 header {
-  padding: 120px 20px 60px;
   text-align: center;
-  background: linear-gradient(135deg, var(--blue-sky), var(--blue-royal));
+  padding: 120px 20px 70px;
+  background: linear-gradient(135deg, var(--blue-royal), var(--blue-sky));
   color: white;
 }
 
 header h1 {
-  font-size: 40px;
+  margin-top: 0;
+  font-size: 36px;
   font-weight: 700;
-  margin-bottom: 10px;
 }
 
 header p {
   font-size: 18px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
-.hero-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-/* BUTTONS */
+/* BUTTONS – pills */
 .btn {
-  background: white;
-  color: var(--blue-royal);
   padding: 10px 20px;
   border-radius: 999px;
-  border: none;
+  background: white;
+  color: var(--blue-royal);
   font-weight: 600;
+  border: none;
   cursor: pointer;
-  transition: 0.2s;
+  margin: 5px;
 }
 
 .btn:hover {
   transform: translateY(-2px);
 }
 
-/* GLASS CARDS (S1) */
+.dark .btn {
+  background: var(--text-dark);
+  color: var(--blue-sky);
+}
+
+/* SECTIONS – clean cards */
 .section {
   max-width: 900px;
   margin: 40px auto;
-  padding: 30px;
-  border-radius: 20px;
-  background: var(--glass-light);
-  backdrop-filter: blur(16px);
+  background: white;
+  padding: 28px;
+  border-radius: 16px;
   border: 1px solid var(--border-light);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.06);
-  animation: fadeInUp 0.8s ease;
 }
 
-.dark-mode .section {
-  background: var(--glass-dark);
+.dark .section {
+  background: #101522;
   border-color: var(--border-dark);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
 }
 
 .section h2 {
@@ -165,62 +154,35 @@ header p {
   color: var(--blue-royal);
 }
 
-.dark-mode .section h2 {
+.dark .section h2 {
   color: var(--blue-sky);
 }
 
-/* ACCORDION FAQ */
+/* FAQ ACCORDION */
 .accordion {
-  background: transparent;
-  border: none;
-  text-align: left;
   width: 100%;
+  text-align: left;
   padding: 12px;
-  font-size: 17px;
+  font-size: 16px;
   cursor: pointer;
   border-bottom: 1px solid var(--border-light);
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
 }
 
-.dark-mode .accordion {
-  border-bottom: 1px solid var(--border-dark);
-  color: var(--text-dark);
+.dark .accordion {
+  border-bottom-color: var(--border-dark);
 }
 
 .panel {
   display: none;
-  padding: 14px;
-  font-size: 15px;
-  opacity: 0.9;
-}
-
-/* QUIZ */
-.quiz-question {
-  font-weight: 600;
-  margin-top: 12px;
-}
-
-.quiz-option {
-  background: rgba(255,255,255,0.6);
   padding: 10px;
-  border-radius: 12px;
-  margin-top: 8px;
-  cursor: pointer;
-  transition: 0.2s;
+  opacity: 0.85;
 }
 
-.quiz-option:hover {
-  background: rgba(255,255,255,0.85);
-}
-
-.dark-mode .quiz-option {
-  background: rgba(255,255,255,0.08);
-}
-
-.dark-mode .quiz-option:hover {
-  background: rgba(255,255,255,0.18);
-}
-
-/* COPY TOAST */
+/* TOAST */
 .toast {
   position: fixed;
   bottom: 20px;
@@ -230,9 +192,8 @@ header p {
   color: white;
   padding: 12px 20px;
   border-radius: 999px;
-  font-weight: 600;
   opacity: 0;
-  transition: opacity 0.4s;
+  transition: 0.4s;
   z-index: 9999;
 }
 
@@ -240,34 +201,29 @@ header p {
   opacity: 1;
 }
 
-/* ANIMATIONS */
-@keyframes fadeInUp {
-  0% {opacity:0; transform:translateY(20px);}
-  100% {opacity:1; transform:translateY(0);}
-}
-
 /* MOBILE */
-@media (max-width: 600px) {
-  header h1 { font-size: 30px; }
-  nav .left a { display: none; }
+@media(max-width: 600px) {
+  nav .left a {
+    display: none;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAVIGATION -->
+<!-- NAV -->
 <nav>
   <div class="left">
-    <a href="#top" id="nav-title">ClarityPath AI</a>
+    <a href="#top">ClarityPath AI</a>
     <a href="#start">Start</a>
     <a href="#method">Program</a>
     <a href="#sessions">Sessions</a>
     <a href="#faq">FAQ</a>
   </div>
   <div class="right">
-    <button onclick="setLanguage('en')">EN</button>
-    <button onclick="setLanguage('fr')">FR</button>
+    <button onclick="setLang('en')">EN</button>
+    <button onclick="setLang('fr')">FR</button>
     <button onclick="toggleDark()">🌙</button>
   </div>
 </nav>
@@ -275,179 +231,119 @@ header p {
 <!-- HERO -->
 <header id="top">
   <h1 id="hero-title">ClarityPath AI</h1>
-  <p id="hero-subtitle">A modern, evidence-based 5-session career clarity program powered by AI.</p>
-  <div class="hero-buttons">
-    <button class="btn" onclick="copyPrompt()">📋 Copy Start Prompt</button>
-    <button class="btn" onclick="scrollToMethod()">How it works</button>
-  </div>
+  <p id="hero-subtitle">A modern 5-session career clarity program powered by AI.</p>
+  <button class="btn" onclick="copyPrompt()">📋 Copy Start Prompt</button>
 </header>
 
-<!-- ABOUT METHOD -->
+<!-- ABOUT -->
 <section class="section" id="method">
   <h2 id="method-title">About the ClarityPath Method</h2>
   <p id="method-text">
-    ClarityPath AI is based on research-backed career coaching models used by:
-    <br><br>• Kathy Caprino (career reinvention)
-    <br>• Richard Bolles (What Color Is Your Parachute)
-    <br>• ICF Coaching Core Competencies
-    <br>• McKinsey Career Architecture
+    ClarityPath AI is based on evidence-based career coaching frameworks:
+    <br><br>• Kathy Caprino (reinvention)
+    <br>• Richard Bolles (Parachute)
+    <br>• ICF Core Coaching Competencies
     <br>• Strengths-based psychology
+    <br>• McKinsey Career Architecture
   </p>
 </section>
 
-<!-- START INSTRUCTIONS -->
+<!-- START -->
 <section class="section" id="start">
-  <h2 id="start-title">How to Start (Copy & Paste)</h2>
-  <p id="start-text">Paste this into ChatGPT to begin Session 1:</p>
+  <h2 id="start-title">How to Start</h2>
+  <p id="start-text">Paste this into ChatGPT:</p>
 
-  <pre id="prompt-block">
-"I want to start the full 5-session Career Clarity Program (SPARK, SHAPE, SHIFT, SYSTEMS, SOAR). Please start with Session 1 and ask me the questions in multiple-choice format."
+  <pre id="prompt-text">
+"I want to start the full 5-session Career Clarity Program (SPARK, SHAPE, SHIFT, SYSTEMS, SOAR). Please begin Session 1 and ask me the questions in multiple-choice format."
   </pre>
 
-  <button class="btn" onclick="copyPrompt()">📋 Copy Start Prompt</button>
+  <button class="btn" onclick="copyPrompt()">📋 Copy Prompt</button>
 </section>
 
-<!-- SESSIONS OVERVIEW -->
+<!-- SESSIONS -->
 <section class="section" id="sessions">
   <h2 id="sessions-title">The 5 Sessions</h2>
   <ul id="sessions-list">
-    <li><strong>SPARK</strong> – Your energy & motivation</li>
-    <li><strong>SHAPE</strong> – Strengths & natural gifts</li>
+    <li><strong>SPARK</strong> – Your motivation</li>
+    <li><strong>SHAPE</strong> – Strengths</li>
     <li><strong>SHIFT</strong> – What must evolve</li>
-    <li><strong>SYSTEMS</strong> – Choosing career systems</li>
+    <li><strong>SYSTEMS</strong> – Work model</li>
     <li><strong>SOAR</strong> – Identity & 90-day plan</li>
   </ul>
 </section>
 
-<!-- QUIZ -->
-<section class="section">
-  <h2 id="quiz-title">Mini Quiz: What's Your Work Style?</h2>
-
-  <div class="quiz-question">1. How do you prefer to work?</div>
-  <div class="quiz-option">Alone, in deep focus</div>
-  <div class="quiz-option">In small creative groups</div>
-  <div class="quiz-option">Leading or facilitating others</div>
-
-  <div class="quiz-question">2. What motivates you most?</div>
-  <div class="quiz-option">Clarity & structure</div>
-  <div class="quiz-option">Helping others grow</div>
-  <div class="quiz-option">Solving complex problems</div>
-
-  <div class="quiz-question">3. What drains you?</div>
-  <div class="quiz-option">Repetition</div>
-  <div class="quiz-option">Lack of meaning</div>
-  <div class="quiz-option">Chaotic environments</div>
-</section>
-
 <!-- FAQ -->
 <section class="section" id="faq">
-  <h2 id="faq-title">FAQ</h2>
+  <h2>FAQ</h2>
 
   <button class="accordion">Is this confidential?</button>
-  <div class="panel">
-    Yes. Nothing is saved unless you manually save it. This is a self-guided private tool.
-  </div>
+  <div class="panel">Yes. Nothing is saved unless YOU save it.</div>
 
   <button class="accordion">How long does it take?</button>
-  <div class="panel">
-    Each session takes 10–15 minutes. The full program is about 60 minutes.
-  </div>
-
-  <button class="accordion">Is it evidence-based?</button>
-  <div class="panel">
-    Yes. It uses modern coaching psychology, ICF methods, strengths-based approaches, and structured decision frameworks.
-  </div>
-
-  <button class="accordion">Is it free?</button>
-  <div class="panel">
-    Yes. You can run the full process inside ChatGPT for free.
-  </div>
+  <div class="panel">Around 60 minutes total.</div>
 
   <button class="accordion">What if I like many things?</button>
-  <div class="panel">
-    This tool is designed exactly for multi-potential people who struggle to choose.
-  </div>
+  <div class="panel">This program is designed for multi-potential people.</div>
+
+  <button class="accordion">Is it free?</button>
+  <div class="panel">Yes. You only need ChatGPT.</div>
 </section>
 
-<!-- FOOTER -->
 <div class="toast" id="toast">Copied!</div>
-
-</body>
 
 <script>
 /* DARK MODE */
 function toggleDark() {
-  document.documentElement.classList.toggle("dark-mode");
+  document.documentElement.classList.toggle("dark");
 }
 
-/* COPY PROMPT */
+/* COPY */
 function copyPrompt() {
-  const text = document.getElementById("prompt-block").innerText.trim();
-  navigator.clipboard.writeText(text)
-    .then(() => showToast())
-    .catch(() => alert("Copy manually."));
+  const text = document.getElementById("prompt-text").innerText.trim();
+  navigator.clipboard.writeText(text);
+  showToast();
 }
 
 /* TOAST */
 function showToast() {
-  const toast = document.getElementById("toast");
-  toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 1600);
+  const t = document.getElementById("toast");
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 1400);
 }
 
-/* SMOOTH SCROLL SHORTCUT */
-function scrollToMethod() {
-  document.getElementById("method").scrollIntoView({ behavior: "smooth" });
-}
-
-/* FAQ ACCORDION */
+/* ACCORDION */
 const acc = document.getElementsByClassName("accordion");
-for (let i=0;i<acc.length;i++) {
+for (let i = 0; i < acc.length; i++) {
   acc[i].addEventListener("click", function () {
-    this.classList.toggle("active");
-    const panel = this.nextElementSibling;
+    let panel = this.nextElementSibling;
     panel.style.display = panel.style.display === "block" ? "none" : "block";
   });
 }
 
-/* MULTI-LANGUAGE */
-function setLanguage(lang) {
-  const en = {
+/* MULTI-LANG */
+function setLang(l) {
+  const EN = {
     heroTitle: "ClarityPath AI",
-    heroSubtitle: "A modern, evidence-based 5-session career clarity program powered by AI.",
+    heroSubtitle: "A modern 5-session career clarity program powered by AI.",
     methodTitle: "About the ClarityPath Method",
-    methodText: "ClarityPath AI is based on career coaching models used by Kathy Caprino, Richard Bolles, ICF coaching, McKinsey Career Architecture, and strengths psychology.",
-    startTitle: "How to Start (Copy & Paste)",
-    startText: "Paste this into ChatGPT to begin Session 1:",
-    sessionsTitle: "The 5 Sessions",
-    quizTitle: "Mini Quiz: What's Your Work Style?",
-    faqTitle: "FAQ",
+    startTitle: "How to Start",
   };
 
-  const fr = {
+  const FR = {
     heroTitle: "ClarityPath AI",
-    heroSubtitle: "Un programme moderne de clarté de carrière en 5 sessions, basé sur la science et optimisé par l'IA.",
+    heroSubtitle: "Un programme moderne de clarté de carrière en 5 sessions propulsé par l'IA.",
     methodTitle: "À propos de la méthode ClarityPath",
-    methodText: "ClarityPath AI s’appuie sur des modèles de coaching utilisés par Kathy Caprino, Richard Bolles, l’ICF, l’architecture de carrière McKinsey et la psychologie des forces.",
-    startTitle: "Comment commencer (copier-coller)",
-    startText: "Collez ceci dans ChatGPT pour commencer la Session 1 :",
-    sessionsTitle: "Les 5 sessions",
-    quizTitle: "Mini Quiz : Quel est ton style de travail ?",
-    faqTitle: "FAQ",
+    startTitle: "Comment commencer",
   };
 
-  const d = lang === "fr" ? fr : en;
+  const d = l === "fr" ? FR : EN;
 
   document.getElementById("hero-title").innerText = d.heroTitle;
   document.getElementById("hero-subtitle").innerText = d.heroSubtitle;
   document.getElementById("method-title").innerText = d.methodTitle;
-  document.getElementById("method-text").innerText = d.methodText;
   document.getElementById("start-title").innerText = d.startTitle;
-  document.getElementById("start-text").innerText = d.startText;
-  document.getElementById("sessions-title").innerText = d.sessionsTitle;
-  document.getElementById("quiz-title").innerText = d.quizTitle;
-  document.getElementById("faq-title").innerText = d.faqTitle;
 }
 </script>
 
+</body>
 </html>
