@@ -153,9 +153,15 @@ a.button:hover {
 --------------------------------*/
 .top-controls {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between; /* Pour aligner les groupes à chaque extrémité */
+  align-items: center; /* Centrer verticalement les éléments */
   gap: 12px;
   padding: 10px 14px 0;
+}
+
+.top-controls-left {
+    display: flex;
+    gap: 8px;
 }
 
 /* (Le style du Dark Mode Switch reste identique pour la cohérence) */
@@ -237,6 +243,76 @@ a.button:hover {
     font-size: 15px;
     opacity: 0.85;
 }
+/* ------------------------------
+   DARK MODE SWITCH (inchangé pour le moment pour le fonctionnement)
+--------------------------------*/
+.dark-switch-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card-light);
+    padding: 6px 14px;
+    border-radius: 999px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.dark-mode .dark-switch-container {
+    background: var(--card-dark);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+
+.dark-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.dark-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--switch-bg);
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "☀";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--text-light);
+}
+
+input:checked + .slider {
+  background-color: var(--accent);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+  content: "🌙";
+  color: var(--text-light);
+}
 
 /* ------------------------------
    RESPONSIVE (App-Like)
@@ -259,6 +335,7 @@ a.button:hover {
     width: 100%;
   }
   .top-controls {
+    flex-direction: row; /* Assure que c'est une ligne sur mobile aussi */
     justify-content: space-between; /* Alignement sur les côtés */
     padding: 10px 10px 0;
   }
@@ -276,7 +353,7 @@ a.button:hover {
 
 <main>
 <div class="top-controls">
-  <div>
+  <div class="top-controls-left">
     <button id="lang-en-btn" onclick="setLanguage('en')">EN</button>
     <button id="lang-fr-btn" onclick="setLanguage('fr')">FR</button>
   </div>
@@ -323,12 +400,12 @@ a.button:hover {
   </section>
   
   <section class="section" id="expert-section">
-    <h2 id="expert-title">The Expert Behind ClarityPath</h2>
+    <h2 id="expert-title">Recommended by Career Coaches</h2>
     <div class="expert-card">
-        <img src="https://via.placeholder.com/100/4cc9f0/FFFFFF?text=Coach+X" alt="Profile of Coach Analyst, Career Strategist">
-        <h3>Coach Analyst X</h3>
-        <p id="expert-role">Certified Career Strategist & AI Methodology Designer</p>
-        <p id="expert-bio">Analyst X has spent 15 years in human potential and corporate strategy, designing frameworks used by hundreds of clients to find clarity and financial alignment. The ClarityPath AI framework distills this high-value experience into a reusable, accessible tool.</p>
+        <img src="https://via.placeholder.com/100/4cc9f0/FFFFFF?text=ClarityPath" alt="ClarityPath AI Recommendation">
+        <h3>ClarityPath AI</h3>
+        <p id="expert-role">Your First Step to Career Clarity</p>
+        <p id="expert-bio">ClarityPath AI is recommended by several career strategists as an excellent first approach to clarify your professional path. It offers a structured, unbiased framework that complements traditional coaching by helping you articulate your core values, strengths, and ideal direction, setting a solid foundation for your career journey.</p>
     </div>
   </section>
 
@@ -434,8 +511,8 @@ function copyPrompt() {
 }
 
 function copyPromptAlert() {
-    // Alerte pour l'utilisateur sur le bouton "Launch" qui n'est qu'une simulation d'un lien profond
-    const launchText = document.getElementById('launch-cta-text').innerText;
+    // Le prompt sera copié automatiquement AVANT d'ouvrir ChatGPT.
+    // L'URL de ChatGPT est un exemple, l'intégration réelle dépendrait de l'API ou des liens profonds.
     const promptText = document.getElementById("prompt-block").innerText.trim();
 
     if (navigator.clipboard) {
@@ -455,16 +532,16 @@ function setLanguage(lang) {
     aboutText: "This AI Career Coach doesn’t give random job lists. It guides you through a structured, human-centered process used by top career coaches.",
     aboutBasedOn: "It is inspired by tools and approaches from:",
     aboutResult: "The agent uses deep questions to help you clarify your strengths, values, work style and ideal direction – then turns it into a 90-day plan.",
-    expertTitle: "The Expert Behind ClarityPath",
-    expertRole: "Certified Career Strategist & AI Methodology Designer",
-    expertBio: "Analyst X has spent 15 years in human potential and corporate strategy, designing frameworks used by hundreds of clients to find clarity and financial alignment. The ClarityPath AI framework distills this high-value experience into a reusable, accessible tool.",
+    expertTitle: "Recommended by Career Coaches",
+    expertRole: "Your First Step to Career Clarity",
+    expertBio: "ClarityPath AI is recommended by several career strategists as an excellent first approach to clarify your professional path. It offers a structured, unbiased framework that complements traditional coaching by helping you articulate your core values, strengths, and ideal direction, setting a solid foundation for your career journey.",
     startTitle: "How to start (copy–paste)",
     startText: "Open ChatGPT, start a new conversation and paste the text below.",
     howTitle: "How the 5-session program works",
     howText: "Each session builds clarity and leads to a concrete next step.",
     whoTitle: "Who is this for?",
-    whoText: "This career program is for people who:",
-    whoFinal: "You don’t need clarity to begin — this creates clarity.",
+    whoText: "This career program is designed for people who:",
+    whoFinal: "You don’t need clarity to begin — this process creates clarity.",
     gainTitle: "What you’ll walk away with",
     gainText: "At the end of the 5 sessions, you will have:",
     badge: "Confidential · Self-paced · Reusable",
@@ -475,57 +552,4 @@ function setLanguage(lang) {
     heroTitle: "ClarityPath IA",
     heroSubtitle: "Un parcours structuré en 5 sessions basé sur la psychologie du coaching.",
     launchCtaText: "Lancer ClarityPath Maintenant !",
-    copyPromptText: "Copier le Prompt de Démarrage",
-    aboutTitle: "Pourquoi cet agent IA est pertinent",
-    aboutText: "Ce coach IA ne propose pas une liste de métiers au hasard. Il te guide à travers un vrai processus structuré, utilisé par les meilleurs coachs.",
-    aboutBasedOn: "Il s’inspire d’outils et d’approches comme :",
-    aboutResult: "L’agent pose des questions profondes pour clarifier tes forces, valeurs, style de travail et direction idéale – puis crée un plan d’action sur 90 jours.",
-    expertTitle: "L'Expert Derrière ClarityPath",
-    expertRole: "Stratège de Carrière Certifié & Concepteur de Méthodologie IA",
-    expertBio: "L'Analyste X a passé 15 ans dans le potentiel humain et la stratégie d'entreprise, concevant des cadres utilisés par des centaines de clients pour trouver clarté et alignement financier. Le cadre ClarityPath IA distille cette expérience de haute valeur dans un outil réutilisable et accessible.",
-    startTitle: "Comment commencer (copier–coller)",
-    startText: "Ouvre ChatGPT, crée une nouvelle conversation et colle le texte ci-dessous. L'IA lancera automatiquement la Session 1.",
-    howTitle: "Comment fonctionne le programme en 5 sessions",
-    howText: "Chaque session renforce la clarté et mène vers un prochain pas concret.",
-    whoTitle: "Pour qui est-ce fait ?",
-    whoText: "Ce programme est conçu pour les personnes qui :",
-    whoFinal: "Tu n’as pas besoin d’avoir la clarté — ce processus la crée.",
-    gainTitle: "Ce que tu obtiendras",
-    gainText: "À la fin des 5 sessions, tu auras :",
-    badge: "Confidentiel · À ton rythme · Réutilisable",
-    prompt: "Je souhaite démarrer le programme complet ClarityPath en 5 sessions (SPARK, SHAPE, SHIFT, SYSTEMS, SOAR).\nVeuillez commencer par la Session 1, me poser les questions sous forme de choix multiples, et attendre mes réponses avant de passer à la session suivante.\nIMPORTANT : À la fin de chaque session, veuillez fournir un résumé structuré de mes points clés et attendre mon 'Feedback Post-session' avant de démarrer la session suivante."
-  };
-
-  const d = lang === "fr" ? fr : en;
-
-  document.getElementById("hero-title").innerText = d.heroTitle;
-  document.getElementById("hero-subtitle").innerText = d.heroSubtitle;
-  document.getElementById("launch-cta-text").innerText = d.launchCtaText;
-  document.getElementById("copy-prompt-text").innerText = d.copyPromptText;
-  document.getElementById("copy-prompt-bottom-text").innerText = d.copyPromptText;
-
-  document.getElementById("about-title").innerText = d.aboutTitle;
-  document.getElementById("about-text").innerText = d.aboutText;
-  document.getElementById("about-based-on").innerText = d.aboutBasedOn;
-  document.getElementById("about-result").innerText = d.aboutResult;
-  
-  document.getElementById("expert-title").innerText = d.expertTitle;
-  document.getElementById("expert-role").innerText = d.expertRole;
-  document.getElementById("expert-bio").innerText = d.expertBio;
-
-  document.getElementById("start-title").innerText = d.startTitle;
-  document.getElementById("start-text").innerText = d.startText;
-  document.getElementById("how-title").innerText = d.howTitle;
-  document.getElementById("how-text").innerText = d.howText;
-  document.getElementById("who-title").innerText = d.whoTitle;
-  document.getElementById("who-text").innerText = d.whoText;
-  document.getElementById("who-final").innerText = d.whoFinal;
-  document.getElementById("gain-title").innerText = d.gainTitle;
-  document.getElementById("gain-text").innerText = d.gainText;
-  document.getElementById("badge-confidential").innerText = d.badge;
-  document.getElementById("prompt-block").innerText = d.prompt;
-}
-</script>
-
-</body>
-</html>
+    copyPromptText: "Copier le Prompt de D
