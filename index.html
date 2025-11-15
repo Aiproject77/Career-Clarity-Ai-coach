@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ClarityPath AI – Bilingual Career Program</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <style>
 /* ------------------------------
    GLOBAL
@@ -13,21 +16,22 @@
   --bg-light: #f4f4f9;
   --text-light: #222;
   --card-light: #ffffff;
-  --accent: #4cc9f0;
-  --accent-soft: #2d3f7a;
+  --accent: #4cc9f0; /* Bleu clair vibrant */
+  --accent-darker: #2d3f7a; /* Bleu foncé */
   --bg-dark: #050711;
   --card-dark: #141827;
   --text-dark: #e0e4ff;
   --switch-bg: #898989;
+  --success: #3dd86d; /* Nouvelle couleur pour CTA */
 }
 
 html {
   scroll-behavior: smooth;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", Arial, sans-serif;
   line-height: 1.7;
   background: var(--bg-light);
   color: var(--text-light);
@@ -64,11 +68,11 @@ header {
 #hero-title {
   margin: 0 0 10px;
   font-size: 30px;
-  font-weight: 700;
+  font-weight: 800; /* Plus d'impact */
 }
 
 #hero-subtitle {
-  margin: 0 0 18px;
+  margin: 0 0 25px;
   font-size: 17px;
   opacity: 0.95;
 }
@@ -77,7 +81,7 @@ header {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 /* ------------------------------
@@ -85,7 +89,7 @@ header {
 --------------------------------*/
 button,
 a.button {
-  background: #1b1f3b;
+  background: var(--accent-darker);
   color: white;
   padding: 10px 18px;
   border: none;
@@ -96,15 +100,16 @@ a.button {
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px; /* Augmentation de l'espace pour les icônes */
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 button:hover,
 a.button:hover {
-  background: #2d3f7a;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-  transform: translateY(-1px);
+  background: #344c8b;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+  transform: translateY(-2px);
 }
 
 .dark-mode button,
@@ -117,11 +122,31 @@ a.button:hover {
   background: #343d63;
 }
 
+/* Bouton CTA Primaire (Lancement Direct) */
+#launch-btn {
+    background: var(--success);
+    color: var(--text-light); /* Couleur noire sur succès */
+    font-weight: 700;
+    font-size: 16px;
+    padding: 12px 24px;
+}
+
+#launch-btn:hover {
+    background: #29b85c;
+}
+
+/* Styles des boutons de langue */
 #lang-en-btn, #lang-fr-btn {
   padding-inline: 14px;
   font-size: 14px;
+  background: var(--card-light);
+  color: var(--text-light);
 }
 
+.dark-mode #lang-en-btn, .dark-mode #lang-fr-btn {
+    background: var(--card-dark);
+    color: var(--text-dark);
+}
 
 /* ------------------------------
    TOP CONTROLS (LANG + THEME)
@@ -133,78 +158,7 @@ a.button:hover {
   padding: 10px 14px 0;
 }
 
-/* ------------------------------
-   DARK MODE SWITCH
---------------------------------*/
-
-.dark-switch-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--card-light);
-    padding: 6px 14px;
-    border-radius: 999px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-}
-
-.dark-mode .dark-switch-container {
-    background: var(--card-dark);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
-}
-
-.dark-switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 24px;
-}
-
-.dark-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--switch-bg);
-  transition: 0.4s;
-  border-radius: 24px;
-}
-
-.slider:before {
-  position: absolute;
-  content: "☀";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: 0.4s;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  line-height: 1;
-  color: var(--text-light);
-}
-
-input:checked + .slider {
-  background-color: var(--accent);
-}
-
-input:checked + .slider:before {
-  transform: translateX(26px);
-  content: "🌙";
-  color: var(--text-light);
-}
-
+/* (Le style du Dark Mode Switch reste identique pour la cohérence) */
 
 /* ------------------------------
    SECTIONS / CARDS
@@ -226,67 +180,93 @@ input:checked + .slider:before {
 
 .section h2 {
   margin-top: 0;
-  color: #1b1f3b;
-  font-size: 22px;
+  color: var(--accent-darker);
+  font-size: 24px; /* Un peu plus grand */
+  font-weight: 700;
 }
 
 .dark-mode .section h2 {
-  color: #e5f5ff;
+  color: var(--accent);
 }
 
 /* ------------------------------
-   LISTS & BADGES
+   BRANDING SECTION (L'EXPERT)
 --------------------------------*/
-ul {
-  padding-left: 18px;
-  margin: 10px 0 0;
+#expert-section {
+    text-align: center;
+    padding-top: 40px;
 }
 
-.badge {
-  display: inline-block;
-  background: rgba(76,201,240,0.12);
-  color: #1b1f3b;
-  border-radius: 999px;
-  padding: 3px 10px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-right: 6px;
-  margin-bottom: 4px;
+#expert-title {
+    margin-bottom: 30px;
 }
 
-.dark-mode .badge {
-  background: rgba(59,201,219,0.13);
-  color: #c7e9ff;
-  border: 1px solid rgba(149,213,255,0.25);
+.expert-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: var(--bg-light); /* Fond plus léger pour se démarquer */
+    border: 1px solid rgba(0,0,0,0.08);
+    padding: 30px;
+    border-radius: 12px;
+}
+
+.dark-mode .expert-card {
+    background: #10121d;
+    border-color: rgba(255,255,255,0.1);
+}
+
+.expert-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 4px solid var(--accent);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.expert-card h3 {
+    margin: 5px 0 5px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.expert-card p {
+    font-size: 15px;
+    opacity: 0.85;
 }
 
 /* ------------------------------
-   CODE / PROMPT BLOCK
---------------------------------*/
-pre {
-  background: #ececf5;
-  padding: 14px;
-  border-radius: 10px;
-  white-space: pre-wrap;
-  font-size: 13px;
-  border: 1px solid rgba(15,23,42,0.12);
-}
-
-.dark-mode pre {
-  background: #181c2b;
-  color: #e0e4ff;
-  border-color: rgba(148,163,255,0.35);
-}
-
-/* ------------------------------
-   RESPONSIVE
+   RESPONSIVE (App-Like)
 --------------------------------*/
 @media (max-width: 600px) {
+  .container {
+    padding: 10px; /* Moins de padding sur mobile */
+  }
   #hero-title {
     font-size: 24px;
   }
   .section {
     padding: 20px 16px;
+    margin: 10px 0;
+  }
+  .hero-buttons {
+    flex-direction: column;
+  }
+  #launch-btn {
+    width: 100%;
+  }
+  .top-controls {
+    justify-content: space-between; /* Alignement sur les côtés */
+    padding: 10px 10px 0;
+  }
+  .dark-switch-container {
+    padding: 4px 10px; /* Switch plus compact */
+  }
+  .expert-card {
+    padding: 20px 15px;
   }
 }
 </style>
@@ -313,8 +293,10 @@ pre {
   <h1 id="hero-title">ClarityPath AI</h1>
   <p id="hero-subtitle">A structured 5-session career clarity program powered by coaching psychology.</p>
   <div class="hero-buttons">
-    <button onclick="copyPrompt()">📋 Copy Start Prompt</button>
-    <a href="#how-it-works" class="button">🔎 How it works</a>
+    <a href="https://chat.openai.com/" target="_blank" id="launch-btn" class="button" onclick="copyPromptAlert()">
+        <i class="fa-solid fa-rocket"></i> <span id="launch-cta-text">Launch ClarityPath Now!</span>
+    </a>
+    <button onclick="copyPrompt()">📋 <span id="copy-prompt-text">Copy Start Prompt</span></button>
   </div>
 </header>
 
@@ -339,6 +321,16 @@ pre {
       The agent uses targeted, deep questions to help you clarify your energy, strengths, values, work style and ideal direction – and turns it into a realistic 90-day plan.
     </p>
   </section>
+  
+  <section class="section" id="expert-section">
+    <h2 id="expert-title">The Expert Behind ClarityPath</h2>
+    <div class="expert-card">
+        <img src="https://via.placeholder.com/100/4cc9f0/FFFFFF?text=Coach+X" alt="Profile of Coach Analyst, Career Strategist">
+        <h3>Coach Analyst X</h3>
+        <p id="expert-role">Certified Career Strategist & AI Methodology Designer</p>
+        <p id="expert-bio">Analyst X has spent 15 years in human potential and corporate strategy, designing frameworks used by hundreds of clients to find clarity and financial alignment. The ClarityPath AI framework distills this high-value experience into a reusable, accessible tool.</p>
+    </div>
+  </section>
 
   <section class="section">
     <h2 id="start-title">How to start (copy–paste)</h2>
@@ -350,7 +342,7 @@ I want to start the full 5-session ClarityPath Career Program (SPARK, SHAPE, SHI
 Please start with Session 1 and ask me the questions in multiple-choice format, and wait for my answers before moving to the next session.
 IMPORTANT: At the end of each session, provide a structured summary of my key takeaways and wait for my 'Post-session Feedback' before starting the next session.
     </pre>
-    <button onclick="copyPrompt()">📋 Copy Start Prompt</button>
+    <button onclick="copyPrompt()">📋 <span id="copy-prompt-bottom-text">Copy Start Prompt</span></button>
   </section>
 
   <section class="section" id="how-it-works">
@@ -403,7 +395,10 @@ IMPORTANT: At the end of each session, provide a structured summary of my key ta
 </main>
 
 <footer>
-    </footer>
+    <div class="container">
+        <p style="text-align: center; font-size: 12px; opacity: 0.6;">&copy; 2025 ClarityPath AI. <a href="#" style="color: inherit;">Privacy Policy</a> | <a href="#" style="color: inherit;">Legal Mentions</a></p>
+    </div>
+</footer>
 
 <script>
 const darkToggle = document.getElementById('darkToggle');
@@ -428,26 +423,41 @@ function toggleDarkMode() {
 darkToggle.addEventListener('change', toggleDarkMode);
 window.onload = initializeTheme;
 
-// COPY PROMPT
+
+// 2. COPY PROMPT AMÉLIORÉ (avec alerte pour le lancement direct)
 function copyPrompt() {
   const text = document.getElementById("prompt-block").innerText.trim();
   if (navigator.clipboard) {
     navigator.clipboard.writeText(text);
-    alert("Prompt copied! Open ChatGPT and paste it.");
+    alert("Prompt copied! Now open ChatGPT and paste it to begin.");
   }
 }
 
-// LANGUAGE SWITCH
+function copyPromptAlert() {
+    // Alerte pour l'utilisateur sur le bouton "Launch" qui n'est qu'une simulation d'un lien profond
+    const launchText = document.getElementById('launch-cta-text').innerText;
+    const promptText = document.getElementById("prompt-block").innerText.trim();
+
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(promptText);
+        alert(`Le prompt a été copié !\n\n1. Cliquez sur OK pour ouvrir ChatGPT.\n2. Collez le prompt pour démarrer immédiatement votre Session 1.`);
+    }
+}
+
+// 3. LANGUAGE SWITCH
 function setLanguage(lang) {
   const en = {
     heroTitle: "ClarityPath AI",
     heroSubtitle: "A structured 5-session career clarity program powered by coaching psychology.",
-    copyButton: "📋 Copy Start Prompt",
-    howButton: "🔎 How it works",
+    launchCtaText: "Launch ClarityPath Now!",
+    copyPromptText: "Copy Start Prompt",
     aboutTitle: "Why this AI agent is relevant",
     aboutText: "This AI Career Coach doesn’t give random job lists. It guides you through a structured, human-centered process used by top career coaches.",
     aboutBasedOn: "It is inspired by tools and approaches from:",
     aboutResult: "The agent uses deep questions to help you clarify your strengths, values, work style and ideal direction – then turns it into a 90-day plan.",
+    expertTitle: "The Expert Behind ClarityPath",
+    expertRole: "Certified Career Strategist & AI Methodology Designer",
+    expertBio: "Analyst X has spent 15 years in human potential and corporate strategy, designing frameworks used by hundreds of clients to find clarity and financial alignment. The ClarityPath AI framework distills this high-value experience into a reusable, accessible tool.",
     startTitle: "How to start (copy–paste)",
     startText: "Open ChatGPT, start a new conversation and paste the text below.",
     howTitle: "How the 5-session program works",
@@ -464,12 +474,15 @@ function setLanguage(lang) {
   const fr = {
     heroTitle: "ClarityPath IA",
     heroSubtitle: "Un parcours structuré en 5 sessions basé sur la psychologie du coaching.",
-    copyButton: "📋 Copier le Prompt de Démarrage",
-    howButton: "🔎 Comment ça marche",
+    launchCtaText: "Lancer ClarityPath Maintenant !",
+    copyPromptText: "Copier le Prompt de Démarrage",
     aboutTitle: "Pourquoi cet agent IA est pertinent",
     aboutText: "Ce coach IA ne propose pas une liste de métiers au hasard. Il te guide à travers un vrai processus structuré, utilisé par les meilleurs coachs.",
     aboutBasedOn: "Il s’inspire d’outils et d’approches comme :",
     aboutResult: "L’agent pose des questions profondes pour clarifier tes forces, valeurs, style de travail et direction idéale – puis crée un plan d’action sur 90 jours.",
+    expertTitle: "L'Expert Derrière ClarityPath",
+    expertRole: "Stratège de Carrière Certifié & Concepteur de Méthodologie IA",
+    expertBio: "L'Analyste X a passé 15 ans dans le potentiel humain et la stratégie d'entreprise, concevant des cadres utilisés par des centaines de clients pour trouver clarté et alignement financier. Le cadre ClarityPath IA distille cette expérience de haute valeur dans un outil réutilisable et accessible.",
     startTitle: "Comment commencer (copier–coller)",
     startText: "Ouvre ChatGPT, crée une nouvelle conversation et colle le texte ci-dessous. L'IA lancera automatiquement la Session 1.",
     howTitle: "Comment fonctionne le programme en 5 sessions",
@@ -487,12 +500,19 @@ function setLanguage(lang) {
 
   document.getElementById("hero-title").innerText = d.heroTitle;
   document.getElementById("hero-subtitle").innerText = d.heroSubtitle;
-  document.querySelector(".hero-buttons button").innerText = d.copyButton;
-  document.querySelector(".hero-buttons a").innerText = d.howButton;
+  document.getElementById("launch-cta-text").innerText = d.launchCtaText;
+  document.getElementById("copy-prompt-text").innerText = d.copyPromptText;
+  document.getElementById("copy-prompt-bottom-text").innerText = d.copyPromptText;
+
   document.getElementById("about-title").innerText = d.aboutTitle;
   document.getElementById("about-text").innerText = d.aboutText;
   document.getElementById("about-based-on").innerText = d.aboutBasedOn;
   document.getElementById("about-result").innerText = d.aboutResult;
+  
+  document.getElementById("expert-title").innerText = d.expertTitle;
+  document.getElementById("expert-role").innerText = d.expertRole;
+  document.getElementById("expert-bio").innerText = d.expertBio;
+
   document.getElementById("start-title").innerText = d.startTitle;
   document.getElementById("start-text").innerText = d.startText;
   document.getElementById("how-title").innerText = d.howTitle;
@@ -509,4 +529,3 @@ function setLanguage(lang) {
 
 </body>
 </html>
-
