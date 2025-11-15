@@ -21,7 +21,9 @@
   --bg-dark: #050711;
   --card-dark: #141827;
   --text-dark: #e0e4ff;
-  --switch-bg: #898989;
+  --switch-bg-off: #ccc; /* Gris pour le switch désactivé */
+  --switch-bg-on: #4cc9f0; /* Accent pour le switch activé */
+  --switch-handle: #fff; /* Poignée du switch */
   --success: #3dd86d; /* Nouvelle couleur pour CTA */
 }
 
@@ -103,6 +105,7 @@ a.button {
   gap: 8px; /* Augmentation de l'espace pour les icônes */
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  max-width: 300px; /* Limiter la largeur des boutons */
 }
 
 button:hover,
@@ -141,6 +144,7 @@ a.button:hover {
   font-size: 14px;
   background: var(--card-light);
   color: var(--text-light);
+  max-width: fit-content; /* Ne pas prendre toute la largeur */
 }
 
 .dark-mode #lang-en-btn, .dark-mode #lang-fr-btn {
@@ -155,8 +159,10 @@ a.button:hover {
   display: flex;
   justify-content: space-between; /* Pour aligner les groupes à chaque extrémité */
   align-items: center; /* Centrer verticalement les éléments */
-  gap: 12px;
-  padding: 10px 14px 0;
+  padding: 10px 20px 0; /* Plus de padding pour les côtés */
+  box-sizing: border-box; /* Inclure padding dans la largeur */
+  max-width: 100vw; /* S'assurer de ne pas déborder */
+  overflow: hidden; /* Cacher tout débordement */
 }
 
 .top-controls-left {
@@ -164,7 +170,79 @@ a.button:hover {
     gap: 8px;
 }
 
-/* (Le style du Dark Mode Switch reste identique pour la cohérence) */
+/* ------------------------------
+   DARK MODE SWITCH (Inspiré de ChatGPT)
+--------------------------------*/
+.dark-switch-container {
+    /* Background est géré par .slider */
+    display: flex;
+    align-items: center;
+}
+
+.dark-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px; /* Hauteur légèrement augmentée */
+}
+
+.dark-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--switch-bg-off);
+  transition: 0.4s;
+  border-radius: 28px; /* Arrondi complet */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px; /* Position de départ */
+  background-color: var(--switch-handle);
+  transition: 0.4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.slider .icon-light,
+.slider .icon-dark {
+    color: var(--switch-handle);
+    font-size: 14px;
+    z-index: 1; /* Pour être au-dessus du slider */
+    transition: color 0.4s;
+}
+
+.slider .icon-light { margin-left: 4px; }
+.slider .icon-dark { margin-right: 4px; }
+
+
+input:checked + .slider {
+  background-color: var(--switch-bg-on);
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px); /* Déplacement de la poignée */
+}
+
+.dark-mode .slider .icon-light { color: rgba(255,255,255,0.6); }
+.dark-mode .slider .icon-dark { color: #fff; }
+
 
 /* ------------------------------
    SECTIONS / CARDS
@@ -243,76 +321,6 @@ a.button:hover {
     font-size: 15px;
     opacity: 0.85;
 }
-/* ------------------------------
-   DARK MODE SWITCH (inchangé pour le moment pour le fonctionnement)
---------------------------------*/
-.dark-switch-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--card-light);
-    padding: 6px 14px;
-    border-radius: 999px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-}
-
-.dark-mode .dark-switch-container {
-    background: var(--card-dark);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
-}
-
-.dark-switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 24px;
-}
-
-.dark-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--switch-bg);
-  transition: 0.4s;
-  border-radius: 24px;
-}
-
-.slider:before {
-  position: absolute;
-  content: "☀";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: 0.4s;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  line-height: 1;
-  color: var(--text-light);
-}
-
-input:checked + .slider {
-  background-color: var(--accent);
-}
-
-input:checked + .slider:before {
-  transform: translateX(26px);
-  content: "🌙";
-  color: var(--text-light);
-}
 
 /* ------------------------------
    RESPONSIVE (App-Like)
@@ -330,17 +338,17 @@ input:checked + .slider:before {
   }
   .hero-buttons {
     flex-direction: column;
+    align-items: center; /* Centrer les boutons dans la colonne */
   }
-  #launch-btn {
-    width: 100%;
+  #launch-btn, button { /* Cibler les boutons du hero pour la largeur */
+    width: 90%; /* Occupe une bonne partie de l'écran mais avec un padding */
+    max-width: 300px; /* Conserver une max-width pour les écrans plus grands */
   }
   .top-controls {
-    flex-direction: row; /* Assure que c'est une ligne sur mobile aussi */
-    justify-content: space-between; /* Alignement sur les côtés */
-    padding: 10px 10px 0;
+    padding: 10px 10px 0; /* Réduire le padding pour les petits écrans */
   }
   .dark-switch-container {
-    padding: 4px 10px; /* Switch plus compact */
+    padding: 0; /* Le switch gère son propre padding interne */
   }
   .expert-card {
     padding: 20px 15px;
@@ -361,7 +369,10 @@ input:checked + .slider:before {
   <div class="dark-switch-container">
     <label class="dark-switch">
       <input type="checkbox" id="darkToggle">
-      <span class="slider"></span>
+      <span class="slider">
+          <i class="fas fa-sun icon-light"></i>
+          <i class="fas fa-moon icon-dark"></i>
+      </span>
     </label>
   </div>
 </div>
@@ -402,7 +413,7 @@ input:checked + .slider:before {
   <section class="section" id="expert-section">
     <h2 id="expert-title">Recommended by Career Coaches</h2>
     <div class="expert-card">
-        <img src="https://via.placeholder.com/100/4cc9f0/FFFFFF?text=ClarityPath" alt="ClarityPath AI Recommendation">
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734b0a4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="ClarityPath AI Recommendation">
         <h3>ClarityPath AI</h3>
         <p id="expert-role">Your First Step to Career Clarity</p>
         <p id="expert-bio">ClarityPath AI is recommended by several career strategists as an excellent first approach to clarify your professional path. It offers a structured, unbiased framework that complements traditional coaching by helping you articulate your core values, strengths, and ideal direction, setting a solid foundation for your career journey.</p>
@@ -552,4 +563,57 @@ function setLanguage(lang) {
     heroTitle: "ClarityPath IA",
     heroSubtitle: "Un parcours structuré en 5 sessions basé sur la psychologie du coaching.",
     launchCtaText: "Lancer ClarityPath Maintenant !",
-    copyPromptText: "Copier le Prompt de D
+    copyPromptText: "Copier le Prompt de Démarrage",
+    aboutTitle: "Pourquoi cet agent IA est pertinent",
+    aboutText: "Ce coach IA ne propose pas une liste de métiers au hasard. Il te guide à travers un vrai processus structuré, utilisé par les meilleurs coachs.",
+    aboutBasedOn: "Il s’inspire d’outils et d’approches comme :",
+    aboutResult: "L’agent pose des questions profondes pour clarifier tes forces, valeurs, style de travail et direction idéale – puis crée un plan d’action sur 90 jours.",
+    expertTitle: "Recommandé par des Coachs de Carrière",
+    expertRole: "Votre Premier Pas vers la Clarté de Carrière",
+    expertBio: "ClarityPath IA est recommandé par plusieurs stratèges de carrière comme une excellente première approche pour clarifier votre chemin professionnel. Il offre un cadre structuré et impartial qui complète le coaching traditionnel en vous aidant à articuler vos valeurs fondamentales, vos forces et votre direction idéale, posant ainsi une base solide pour votre parcours professionnel.",
+    startTitle: "Comment commencer (copier–coller)",
+    startText: "Ouvre ChatGPT, crée une nouvelle conversation et colle le texte ci-dessous. L'IA lancera automatiquement la Session 1.",
+    howTitle: "Comment fonctionne le programme en 5 sessions",
+    howText: "Chaque session renforce la clarté et mène vers un prochain pas concret.",
+    whoTitle: "Pour qui est-ce fait ?",
+    whoText: "Ce programme est conçu pour les personnes qui :",
+    whoFinal: "Tu n’as pas besoin d’avoir la clarté — ce processus la crée.",
+    gainTitle: "Ce que tu obtiendras",
+    gainText: "À la fin des 5 sessions, tu auras :",
+    badge: "Confidentiel · À ton rythme · Réutilisable",
+    prompt: "Je souhaite démarrer le programme complet ClarityPath en 5 sessions (SPARK, SHAPE, SHIFT, SYSTEMS, SOAR).\nVeuillez commencer par la Session 1, me poser les questions sous forme de choix multiples, et attendre mes réponses avant de passer à la session suivante.\nIMPORTANT : À la fin de chaque session, veuillez fournir un résumé structuré de mes points clés et attendre mon 'Feedback Post-session' avant de démarrer la session suivante."
+  };
+
+  const d = lang === "fr" ? fr : en;
+
+  document.getElementById("hero-title").innerText = d.heroTitle;
+  document.getElementById("hero-subtitle").innerText = d.heroSubtitle;
+  document.getElementById("launch-cta-text").innerText = d.launchCtaText;
+  document.getElementById("copy-prompt-text").innerText = d.copyPromptText;
+  document.getElementById("copy-prompt-bottom-text").innerText = d.copyPromptText;
+
+  document.getElementById("about-title").innerText = d.aboutTitle;
+  document.getElementById("about-text").innerText = d.aboutText;
+  document.getElementById("about-based-on").innerText = d.aboutBasedOn;
+  document.getElementById("about-result").innerText = d.aboutResult;
+  
+  document.getElementById("expert-title").innerText = d.expertTitle;
+  document.getElementById("expert-role").innerText = d.expertRole;
+  document.getElementById("expert-bio").innerText = d.expertBio;
+
+  document.getElementById("start-title").innerText = d.startTitle;
+  document.getElementById("start-text").innerText = d.startText;
+  document.getElementById("how-title").innerText = d.howTitle;
+  document.getElementById("how-text").innerText = d.howText;
+  document.getElementById("who-title").innerText = d.whoTitle;
+  document.getElementById("who-text").innerText = d.whoText;
+  document.getElementById("who-final").innerText = d.whoFinal;
+  document.getElementById("gain-title").innerText = d.gainTitle;
+  document.getElementById("gain-text").innerText = d.gainText;
+  document.getElementById("badge-confidential").innerText = d.badge;
+  document.getElementById("prompt-block").innerText = d.prompt;
+}
+</script>
+
+</body>
+</html>
