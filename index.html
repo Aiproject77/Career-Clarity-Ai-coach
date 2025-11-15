@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ClarityPath AI – Bilingual Career Program</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -10,41 +10,65 @@
 
 <style>
 /* ------------------------------
-   GLOBAL
+   GLOBAL (box-sizing + safe width rules)
 --------------------------------*/
-/* FIX MAJEUR: Empêche l'overflow horizontal */
-* {
-    box-sizing: border-box;
+/* Strong recommendation pattern: set box-sizing on root, inherit for everything */
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  /* DO NOT hide overflow-x globally here — we fix causes instead */
+  max-width: 100%;
+  /* keep default overflow so issues aren't masked */
 }
 
+*, *::before, *::after {
+  box-sizing: inherit; /* important: padding/border are included in width calculations */
+}
+
+/* Make sure large media don't overflow */
+img, video, iframe, embed, object {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Constrain body to viewport width and avoid 100vw pitfalls */
+body {
+  margin: 0;
+  line-height: 1.7;
+  background: var(--bg-light, #f4f4f9);
+  color: var(--text-light, #222);
+  transition: background 0.3s ease, color 0.3s ease;
+  width: 100%;
+  max-width: 100%;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  min-height: 100vh;
+  overflow-x: visible; /* do not hide overflow, we fix root causes */
+}
+
+/* Optional: make content not extend past root content box */
+main, header, footer, .container {
+  max-width: 100%;
+}
+
+/* ------------------------------
+   THEME / COLORS
+--------------------------------*/
 :root {
   --bg-light: #f4f4f9;
   --text-light: #222;
   --card-light: #ffffff;
-  --accent: #4cc9f0; /* Bleu clair vibrant */
-  --accent-darker: #2d3f7a; /* Bleu foncé */
+  --accent: #4cc9f0;
+  --accent-darker: #2d3f7a;
   --bg-dark: #050711;
   --card-dark: #141827;
   --text-dark: #e0e4ff;
-  --switch-bg-off: #ccc; 
-  --switch-bg-on: #007aff; /* Bleu Apple/ChatGPT */
-  --switch-handle: #fff; 
-  --success: #3dd86d; 
-}
-
-html {
-  scroll-behavior: smooth;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-  overflow-x: hidden; /* Sécurité anti-débordement */
-}
-
-body {
-  margin: 0;
-  line-height: 1.7;
-  background: var(--bg-light);
-  color: var(--text-light);
-  transition: background 0.3s ease, color 0.3s ease;
-  width: 100vw; /* S'assurer que le corps ne dépasse pas */
+  --switch-bg-off: #ccc;
+  --switch-bg-on: #007aff;
+  --switch-handle: #fff;
+  --success: #3dd86d;
 }
 
 .dark-mode body {
@@ -52,10 +76,14 @@ body {
   color: var(--text-dark);
 }
 
+/* ------------------------------
+   LAYOUT / CONTAINER
+--------------------------------*/
 .container {
   max-width: 960px;
   margin: 0 auto;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 /* ------------------------------
@@ -68,16 +96,18 @@ header {
   text-align: center;
   border-bottom: 4px solid rgba(255,255,255,0.18);
 }
-/* ... Styles pour header, hero-title, hero-subtitle restent similaires ... */
+
+/* Hero buttons */
 .hero-buttons {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 12px;
+  width: 100%;
 }
 
 /* ------------------------------
-   BUTTONS (Ajustement de la largeur)
+   BUTTONS
 --------------------------------*/
 button,
 a.button {
@@ -92,57 +122,78 @@ a.button {
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 8px; 
+  gap: 8px;
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  max-width: 400px; /* Limite générale pour éviter les boutons trop larges */
+  /* don't use 100vw-related widths on buttons; use percentages or max-width */
+  max-width: 400px;
+  box-sizing: border-box;
 }
 
-/* Bouton CTA Primaire (Lancement Direct) */
 #launch-btn {
-    background: var(--success);
-    color: var(--text-light); 
-    font-weight: 700;
-    font-size: 16px;
-    padding: 12px 24px;
-    /* On garde max-width à 400px ou moins si on veut qu'il soit moins large que le conteneur */
+  background: var(--success);
+  color: var(--text-light);
+  font-weight: 700;
+  font-size: 16px;
+  padding: 12px 24px;
+  max-width: 400px;
 }
 
 /* ------------------------------
    TOP CONTROLS (Lang + Theme)
+   - ensure flexible children can shrink (min-width:0)
+   - avoid max-width:100vw (it can combine with padding and cause overflow)
 --------------------------------*/
 .top-controls {
   display: flex;
-  justify-content: space-between; 
-  align-items: center; 
-  padding: 10px 20px 0; 
-  max-width: 100vw;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 20px; /* use logical properties */
+  padding-block-start: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 12px;
+  flex-wrap: nowrap; /* we'll allow wrapping on small screens via media query */
 }
 
+/* Allow flex children to shrink properly (prevents overflow due to long content) */
+.top-controls > * {
+  min-width: 0;
+}
+
+/* Left group should take available space and shrink if needed */
 .top-controls-left {
-    display: flex;
-    gap: 8px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  overflow: visible;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
+.dark-switch-container {
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+/* Language buttons */
 #lang-en-btn, #lang-fr-btn {
-  padding: 8px 12px; /* Rendre les boutons de langue plus compacts */
+  padding: 8px 12px;
   font-size: 14px;
+  white-space: nowrap;
 }
 
 /* ------------------------------
-   DARK MODE SWITCH (Style ChatGPT)
+   DARK MODE SWITCH
 --------------------------------*/
-.dark-switch-container {
-    padding: 0; /* Pas de padding extérieur */
-    background: none;
-    box-shadow: none;
-}
-
 .dark-switch {
   position: relative;
   display: inline-block;
   width: 50px;
-  height: 28px; 
+  height: 28px;
 }
 
 .dark-switch input {
@@ -154,25 +205,23 @@ a.button {
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0; /* shorthand for top/right/bottom/left: 0 */
   background-color: var(--switch-bg-off);
   transition: 0.4s;
-  border-radius: 28px; 
+  border-radius: 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 4px;
+  box-sizing: border-box;
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 24px; /* Plus grande poignée */
+  height: 24px;
   width: 24px;
-  left: 2px; /* Position de départ ajustée */
+  left: 2px;
   background-color: var(--switch-handle);
   transition: 0.4s;
   border-radius: 50%;
@@ -181,19 +230,19 @@ a.button {
 
 .slider .icon-light,
 .slider .icon-dark {
-    font-size: 14px;
-    line-height: 24px;
-    z-index: 1; 
-    transition: color 0.4s;
+  font-size: 14px;
+  line-height: 24px;
+  z-index: 1;
+  transition: color 0.4s;
 }
 
-.slider .icon-light { 
-    color: var(--text-light); /* Couleur foncée */
-    margin-left: 4px; 
+.slider .icon-light {
+  color: var(--text-light);
+  margin-left: 4px;
 }
-.slider .icon-dark { 
-    color: #fff; /* Couleur claire */
-    margin-right: 4px; 
+.slider .icon-dark {
+  color: #fff;
+  margin-right: 4px;
 }
 
 input:checked + .slider {
@@ -201,15 +250,15 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(20px); /* Déplacement de la poignée ajusté */
+  transform: translateX(20px);
 }
 
 /* ------------------------------
-   RESPONSIVE (App-Like)
+   RESPONSIVE (App-like)
 --------------------------------*/
 @media (max-width: 600px) {
   .container {
-    padding: 10px; 
+    padding: 10px;
   }
   .section {
     padding: 20px 16px;
@@ -217,20 +266,42 @@ input:checked + .slider:before {
   }
   .hero-buttons {
     flex-direction: column;
-    align-items: center; 
-    gap: 8px; /* Réduire l'espace entre les boutons */
+    align-items: center;
+    gap: 8px;
   }
-  
-  /* Cible spécifique pour les boutons du hero pour la largeur mobile */
-  .hero-buttons #launch-btn, 
+
+  .hero-buttons #launch-btn,
   .hero-buttons button {
-    width: 90%; 
-    max-width: 350px; /* Conserver une max-width raisonnable */
+    width: 90%;
+    max-width: 350px;
   }
-  
+
+  /* Allow top-controls to wrap on very small screens to avoid overflow */
   .top-controls {
-    padding: 10px 10px 0; /* Réduire le padding pour les petits écrans */
+    padding-inline: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
   }
+  .top-controls-left {
+    flex: 1 1 100%;
+    gap: 8px;
+    justify-content: flex-start;
+  }
+  .dark-switch-container {
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+}
+
+/* ------------------------------
+   Helpful debug helpers (dev only)
+   - Use these temporarily to find overflowing elements:
+     document.documentElement.classList.add('show-overflow')
+--------------------------------*/
+.show-overflow * {
+  /* outline helps spot overflowing blocks during QA, remove in production */
+  outline: 0.5px dashed rgba(255,0,0,0.06);
 }
 </style>
 </head>
@@ -238,145 +309,148 @@ input:checked + .slider:before {
 <body>
 
 <main>
-<div class="top-controls">
-  <div class="top-controls-left">
-    <button id="lang-en-btn" onclick="setLanguage('en')">EN</button>
-    <button id="lang-fr-btn" onclick="setLanguage('fr')">FR</button>
-  </div>
-  
-  <div class="dark-switch-container">
-    <label class="dark-switch">
-      <input type="checkbox" id="darkToggle">
-      <span class="slider">
-          <i class="fas fa-sun icon-light"></i>
-          <i class="fas fa-moon icon-dark"></i>
-      </span>
-    </label>
-  </div>
-</div>
-
-<header>
-  <h1 id="hero-title">ClarityPath AI</h1>
-  <p id="hero-subtitle">A structured 5-session career clarity program powered by coaching psychology.</p>
-  <div class="hero-buttons">
-    <a href="https://chat.openai.com/" target="_blank" id="launch-btn" class="button" onclick="copyPromptAlert()">
-        <i class="fa-solid fa-rocket"></i> <span id="launch-cta-text">Launch ClarityPath Now!</span>
-    </a>
-    <button onclick="copyPrompt()">📋 <span id="copy-prompt-text">Copy Start Prompt</span></button>
-  </div>
-</header>
-
-<div class="container">
-
-  <section class="section" id="about-section">
-    <h2 id="about-title">Why this AI agent is relevant</h2>
-    <p id="about-text">
-      This AI Career Coach doesn’t give random job lists. It guides you through a structured, human-centered process used by top career coaches and transition experts.
-    </p>
-    <p id="about-based-on">
-      It is inspired by tools and approaches from:
-    </p>
-    <ul id="about-list">
-      <li>Modern career reinvention work (Kathy Caprino and others)</li>
-      <li>“What Color Is Your Parachute?” by Richard Bolles</li>
-      <li>ICF coaching principles – powerful questions, active listening, ethics</li>
-      <li>McKinsey-style career architecture: role systems, skills, value creation</li>
-      <li>Strengths-based coaching and positive psychology</li>
-    </ul>
-    <p id="about-result">
-      The agent uses targeted, deep questions to help you clarify your energy, strengths, values, work style and ideal direction – and turns it into a realistic 90-day plan.
-    </p>
-  </section>
-  
-  <section class="section" id="expert-section">
-    <h2 id="expert-title">Recommended by Career Coaches</h2>
-    <div class="expert-card">
-        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734b0a4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="ClarityPath AI Recommendation">
-        <h3>ClarityPath AI</h3>
-        <p id="expert-role">Your First Step to Career Clarity</p>
-        <p id="expert-bio">ClarityPath AI is recommended by several career strategists as an excellent first approach to clarify your professional path. It offers a structured, unbiased framework that complements traditional coaching by helping you articulate your core values, strengths, and ideal direction, setting a solid foundation for your career journey.</p>
+  <div class="top-controls" role="navigation" aria-label="Top controls">
+    <div class="top-controls-left">
+      <button id="lang-en-btn" onclick="setLanguage('en')">EN</button>
+      <button id="lang-fr-btn" onclick="setLanguage('fr')">FR</button>
     </div>
-  </section>
 
-  <section class="section">
-    <h2 id="start-title">How to start (copy–paste)</h2>
-    <p id="start-text">
-      Open ChatGPT, start a new conversation and paste the exact text below. The AI will automatically launch Session 1.
-    </p>
-    <pre id="prompt-block">
+    <div class="dark-switch-container" aria-hidden="false">
+      <label class="dark-switch" aria-label="Toggle dark mode">
+        <input type="checkbox" id="darkToggle" aria-describedby="darkToggleDesc">
+        <span class="slider" id="darkToggleDesc">
+            <i class="fas fa-sun icon-light" aria-hidden="true"></i>
+            <i class="fas fa-moon icon-dark" aria-hidden="true"></i>
+        </span>
+      </label>
+    </div>
+  </div>
+
+  <header>
+    <h1 id="hero-title">ClarityPath AI</h1>
+    <p id="hero-subtitle">A structured 5-session career clarity program powered by coaching psychology.</p>
+    <div class="hero-buttons">
+      <a href="https://chat.openai.com/" target="_blank" id="launch-btn" class="button" onclick="copyPromptAlert()">
+          <i class="fa-solid fa-rocket" aria-hidden="true"></i>
+          <span id="launch-cta-text">Launch ClarityPath Now!</span>
+      </a>
+      <button onclick="copyPrompt()" aria-label="Copy start prompt">📋 <span id="copy-prompt-text">Copy Start Prompt</span></button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <section class="section" id="about-section">
+      <h2 id="about-title">Why this AI agent is relevant</h2>
+      <p id="about-text">
+        This AI Career Coach doesn’t give random job lists. It guides you through a structured, human-centered process used by top career coaches and transition experts.
+      </p>
+      <p id="about-based-on">
+        It is inspired by tools and approaches from:
+      </p>
+      <ul id="about-list">
+        <li>Modern career reinvention work (Kathy Caprino and others)</li>
+        <li>“What Color Is Your Parachute?” by Richard Bolles</li>
+        <li>ICF coaching principles – powerful questions, active listening, ethics</li>
+        <li>McKinsey-style career architecture: role systems, skills, value creation</li>
+        <li>Strengths-based coaching and positive psychology</li>
+      </ul>
+      <p id="about-result">
+        The agent uses targeted, deep questions to help you clarify your energy, strengths, values, work style and ideal direction – and turns it into a realistic 90-day plan.
+      </p>
+    </section>
+
+    <section class="section" id="expert-section">
+      <h2 id="expert-title">Recommended by Career Coaches</h2>
+      <div class="expert-card">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734b0a4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="ClarityPath AI Recommendation">
+          <h3>ClarityPath AI</h3>
+          <p id="expert-role">Your First Step to Career Clarity</p>
+          <p id="expert-bio">ClarityPath AI is recommended by several career strategists as an excellent first approach to clarify your professional path. It offers a structured, unbiased framework that complements traditional coaching by helping you articulate your core values, strengths, and ideal direction, setting a solid foundation for your career journey.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 id="start-title">How to start (copy–paste)</h2>
+      <p id="start-text">
+        Open ChatGPT, start a new conversation and paste the exact text below. The AI will automatically launch Session 1.
+      </p>
+      <pre id="prompt-block">
 I want to start the full 5-session ClarityPath Career Program (SPARK, SHAPE, SHIFT, SYSTEMS, SOAR).
 Please start with Session 1 and ask me the questions in multiple-choice format, and wait for my answers before moving to the next session.
 IMPORTANT: At the end of each session, provide a structured summary of my key takeaways and wait for my 'Post-session Feedback' before starting the next session.
-    </pre>
-    <button onclick="copyPrompt()">📋 <span id="copy-prompt-bottom-text">Copy Start Prompt</span></button>
-  </section>
+      </pre>
+      <button onclick="copyPrompt()">📋 <span id="copy-prompt-bottom-text">Copy Start Prompt</span></button>
+    </section>
 
-  <section class="section" id="how-it-works">
-    <h2 id="how-title">How the 5-session program works</h2>
-    <p id="how-text">
-      The AI coach will take you through five structured sessions. Each one builds on the previous to give you clarity and a concrete next step.
-    </p>
-    <ul id="how-list">
-      <li><strong>SPARK</strong> – Energy, motivation, and what matters most.</li>
-      <li><strong>SHAPE</strong> – Strengths, patterns, talents, and natural gifts.</li>
-      <li><strong>SHIFT</strong> – What must change, and what direction feels aligned.</li>
-      <li><strong>SYSTEMS</strong> – Explore different career “systems” (coaching, strategy, tech, product, entrepreneurship).</li>
-      <li><strong>SOAR</strong> – Identity, direction, and your 90-day plan.</li>
-    </ul>
-  </section>
+    <section class="section" id="how-it-works">
+      <h2 id="how-title">How the 5-session program works</h2>
+      <p id="how-text">
+        The AI coach will take you through five structured sessions. Each one builds on the previous to give you clarity and a concrete next step.
+      </p>
+      <ul id="how-list">
+        <li><strong>SPARK</strong> – Energy, motivation, and what matters most.</li>
+        <li><strong>SHAPE</strong> – Strengths, patterns, talents, and natural gifts.</li>
+        <li><strong>SHIFT</strong> – What must change, and what direction feels aligned.</li>
+        <li><strong>SYSTEMS</strong> – Explore different career “systems” (coaching, strategy, tech, product, entrepreneurship).</li>
+        <li><strong>SOAR</strong> – Identity, direction, and your 90-day plan.</li>
+      </ul>
+    </section>
 
-  <section class="section">
-    <h2 id="who-title">Who is this for?</h2>
-    <p id="who-text">
-      This AI career program is designed for people who:
-    </p>
-    <ul id="who-list">
-      <li>Like many things and struggle to choose</li>
-      <li>Are multi-potential and curious</li>
-      <li>Feel stuck or misaligned</li>
-      <li>Want meaningful or strategic work</li>
-      <li>Prefer deep, structured questions</li>
-    </ul>
-    <p id="who-final">
-      You don’t need clarity to begin — this process creates clarity.
-    </p>
-  </section>
+    <section class="section">
+      <h2 id="who-title">Who is this for?</h2>
+      <p id="who-text">
+        This AI career program is designed for people who:
+      </p>
+      <ul id="who-list">
+        <li>Like many things and struggle to choose</li>
+        <li>Are multi-potential and curious</li>
+        <li>Feel stuck or misaligned</li>
+        <li>Want meaningful or strategic work</li>
+        <li>Prefer deep, structured questions</li>
+      </ul>
+      <p id="who-final">
+        You don’t need clarity to begin — this process creates clarity.
+      </p>
+    </section>
 
-  <section class="section">
-    <h2 id="gain-title">What you’ll walk away with</h2>
-    <p id="gain-text">
-      At the end of the 5 sessions, you will have:
-    </p>
-    <ul id="gain-list">
-      <li>A clear picture of your strengths and values</li>
-      <li>2–3 aligned career directions</li>
-      <li>A vocabulary to describe your profile</li>
-      <li>A realistic 90-day action plan</li>
-      <li>A reusable clarity method</li>
-    </ul>
-    <span class="badge" id="badge-confidential">Confidential · Self-paced · Reusable</span>
-  </section>
+    <section class="section">
+      <h2 id="gain-title">What you’ll walk away with</h2>
+      <p id="gain-text">
+        At the end of the 5 sessions, you will have:
+      </p>
+      <ul id="gain-list">
+        <li>A clear picture of your strengths and values</li>
+        <li>2–3 aligned career directions</li>
+        <li>A vocabulary to describe your profile</li>
+        <li>A realistic 90-day action plan</li>
+        <li>A reusable clarity method</li>
+      </ul>
+      <span class="badge" id="badge-confidential">Confidential · Self-paced · Reusable</span>
+    </section>
 
-</div>
+  </div>
 </main>
 
 <footer>
-    <div class="container">
-        <p style="text-align: center; font-size: 12px; opacity: 0.6;">&copy; 2025 ClarityPath AI. <a href="#" style="color: inherit;">Privacy Policy</a> | <a href="#" style="color: inherit;">Legal Mentions</a></p>
-    </div>
+  <div class="container">
+    <p style="text-align: center; font-size: 12px; opacity: 0.6;">&copy; 2025 ClarityPath AI. <a href="#" style="color: inherit;">Privacy Policy</a> | <a href="#" style="color: inherit;">Legal Mentions</a></p>
+  </div>
 </footer>
 
 <script>
+/* ------------------------------
+   Theme persistence & UI scripts (unchanged, only small guards added)
+--------------------------------*/
 const darkToggle = document.getElementById('darkToggle');
 
-// 1. PERSISTANCE DU THÈME (via localStorage)
 function initializeTheme() {
   const savedTheme = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
     document.documentElement.classList.add('dark-mode');
-    darkToggle.checked = true;
+    if (darkToggle) darkToggle.checked = true;
   }
 }
 
@@ -386,29 +460,32 @@ function toggleDarkMode() {
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 }
 
-darkToggle.addEventListener('change', toggleDarkMode);
+if (darkToggle) {
+  darkToggle.addEventListener('change', toggleDarkMode);
+}
 window.onload = initializeTheme;
 
-
-// 2. COPY PROMPT AMÉLIORÉ (avec alerte pour le lancement direct)
+/* Copy prompt helpers */
 function copyPrompt() {
-  const text = document.getElementById("prompt-block").innerText.trim();
-  if (navigator.clipboard) {
+  const textEl = document.getElementById("prompt-block");
+  const text = textEl ? textEl.innerText.trim() : '';
+  if (navigator.clipboard && text) {
     navigator.clipboard.writeText(text);
     alert("Prompt copied! Now open ChatGPT and paste it to begin.");
   }
 }
 
 function copyPromptAlert() {
-    const promptText = document.getElementById("prompt-block").innerText.trim();
+  const promptTextEl = document.getElementById("prompt-block");
+  const promptText = promptTextEl ? promptTextEl.innerText.trim() : '';
 
-    if (navigator.clipboard) {
-        navigator.clipboard.writeText(promptText);
-        alert(`Le prompt a été copié !\n\n1. Cliquez sur OK pour ouvrir ChatGPT.\n2. Collez le prompt pour démarrer immédiatement votre Session 1.`);
-    }
+  if (navigator.clipboard && promptText) {
+    navigator.clipboard.writeText(promptText);
+    alert(`Le prompt a été copié !\n\n1. Cliquez sur OK pour ouvrir ChatGPT.\n2. Collez le prompt pour démarrer immédiatement votre Session 1.`);
+  }
 }
 
-// 3. LANGUAGE SWITCH
+/* Language switch */
 function setLanguage(lang) {
   const en = {
     heroTitle: "ClarityPath AI",
@@ -462,32 +539,59 @@ function setLanguage(lang) {
 
   const d = lang === "fr" ? fr : en;
 
-  document.getElementById("hero-title").innerText = d.heroTitle;
-  document.getElementById("hero-subtitle").innerText = d.heroSubtitle;
-  document.getElementById("launch-cta-text").innerText = d.launchCtaText;
-  document.getElementById("copy-prompt-text").innerText = d.copyPromptText;
-  document.getElementById("copy-prompt-bottom-text").innerText = d.copyPromptText;
+  // defensive checks
+  const maybeSet = (id, value) => {
+    const el = document.getElementById(id);
+    if (el) el.innerText = value;
+  };
 
-  document.getElementById("about-title").innerText = d.aboutTitle;
-  document.getElementById("about-text").innerText = d.aboutText;
-  document.getElementById("about-based-on").innerText = d.aboutBasedOn;
-  document.getElementById("about-result").innerText = d.aboutResult;
-  
-  document.getElementById("expert-title").innerText = d.expertTitle;
-  document.getElementById("expert-role").innerText = d.expertRole;
-  document.getElementById("expert-bio").innerText = d.expertBio;
+  maybeSet("hero-title", d.heroTitle);
+  maybeSet("hero-subtitle", d.heroSubtitle);
+  maybeSet("launch-cta-text", d.launchCtaText);
+  maybeSet("copy-prompt-text", d.copyPromptText);
+  maybeSet("copy-prompt-bottom-text", d.copyPromptText);
 
-  document.getElementById("start-title").innerText = d.startTitle;
-  document.getElementById("start-text").innerText = d.startText;
-  document.getElementById("how-title").innerText = d.howTitle;
-  document.getElementById("how-text").innerText = d.howText;
-  document.getElementById("who-title").innerText = d.whoTitle;
-  document.getElementById("who-text").innerText = d.whoText;
-  document.getElementById("who-final").innerText = d.whoFinal;
-  document.getElementById("gain-title").innerText = d.gainTitle;
-  document.getElementById("gain-text").innerText = d.gainText;
-  document.getElementById("badge-confidential").innerText = d.badge;
-  document.getElementById("prompt-block").innerText = d.prompt;
+  maybeSet("about-title", d.aboutTitle);
+  maybeSet("about-text", d.aboutText);
+  maybeSet("about-based-on", d.aboutBasedOn);
+  maybeSet("about-result", d.aboutResult);
+
+  maybeSet("expert-title", d.expertTitle);
+  maybeSet("expert-role", d.expertRole);
+  maybeSet("expert-bio", d.expertBio);
+
+  maybeSet("start-title", d.startTitle);
+  maybeSet("start-text", d.startText);
+  maybeSet("how-title", d.howTitle);
+  maybeSet("how-text", d.howText);
+  maybeSet("who-title", d.whoTitle);
+  maybeSet("who-text", d.whoText);
+  maybeSet("who-final", d.whoFinal);
+  maybeSet("gain-title", d.gainTitle);
+  maybeSet("gain-text", d.gainText);
+  maybeSet("badge-confidential", d.badge);
+  const promptBlock = document.getElementById("prompt-block");
+  if (promptBlock) promptBlock.innerText = d.prompt;
+}
+
+/* ------------------------------
+   Quick helper to detect overflowing elements in runtime
+   (open console and run detectOverflows())
+--------------------------------*/
+function detectOverflows() {
+  const docW = document.documentElement.clientWidth;
+  const over = [...document.querySelectorAll('body *')].filter(el => {
+    // exclude elements with 0 width (like scripts)
+    try {
+      return el.offsetWidth > docW + 1; // +1 tolerance
+    } catch (e) {
+      return false;
+    }
+  });
+  console.group(`Overflow debug — document width: ${docW}px — ${over.length} elements`);
+  over.forEach(el => console.log(el, 'width=', el.offsetWidth));
+  console.groupEnd();
+  return over;
 }
 </script>
 
