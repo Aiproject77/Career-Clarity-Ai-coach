@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ClarifyPath – Career Clarity Program</title>
+<title>ClarifyPath – Bilingual Career Program</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
 <style>
 
 /* =========================================================
@@ -46,6 +47,10 @@ body {
     box-shadow: 0 6px 22px rgba(0,0,0,0.4);
 }
 
+.dark-mode header {
+    background: linear-gradient(135deg, #3bc9db, #111527);
+}
+
 /* =========================================================
    LAYOUT
 ========================================================= */
@@ -70,7 +75,6 @@ body {
     gap: 8px;
 }
 
-/* LANG BUTTONS */
 .lang-btn {
     padding: 8px 12px;
     background: #1f2849;
@@ -139,10 +143,6 @@ header {
     border-bottom: 4px solid rgba(255,255,255,0.12);
 }
 
-.dark-mode header {
-    background: linear-gradient(135deg, #3bc9db, #111527);
-}
-
 h1 {
     margin: 0;
     font-size: 32px;
@@ -161,6 +161,7 @@ h1 {
     flex-direction: column;
     gap: 12px;
     align-items: center;
+    width: 100%;
 }
 
 .button {
@@ -199,7 +200,6 @@ h1 {
     box-shadow: 0 6px 16px rgba(0,0,0,0.06);
 }
 
-/* TITLES */
 .card h2 {
     margin-top: 0;
     font-size: 22px;
@@ -218,20 +218,21 @@ pre {
     white-space: pre-wrap;
     border: 1px solid rgba(0,0,0,0.1);
 }
+
 .dark-mode pre {
     background: #181c27;
     border-color: rgba(255,255,255,0.12);
 }
 
 /* =========================================================
-   RESPONSIVE FIXES
+   RESPONSIVE
 ========================================================= */
 @media (max-width: 600px) {
     .container {
         padding: 16px;
     }
     .top-controls {
-        padding: 10px 10px 0;
+        padding: 10px 8px 0;
     }
 }
 
@@ -242,7 +243,7 @@ pre {
 <body>
 
 <!-- =========================================================
-     TOP CONTROLS (LANGUAGE + DARK MODE)
+     TOP CONTROLS
 ========================================================= -->
 <div class="top-controls">
     <div class="top-left">
@@ -274,27 +275,70 @@ pre {
     </div>
 </header>
 
-
-<!-- =========================================================
-     CONTENT
-========================================================= -->
 <div class="container">
-
-    <!-- ABOUT -->
+   
+   <!-- =========================================================
+         SECTION — WHY THIS AI AGENT IS RELEVANT
+    ========================================================== -->
     <div class="card">
-        <h2 id="about-title">What is ClarifyPath?</h2>
+        <h2 id="about-title">Why this AI agent is relevant</h2>
         <p id="about-text">
-            ClarifyPath is a guided 5-session process based on modern coaching psychology, 
-            career reinvention frameworks, and strategic decision-making tools.
+            ClarifyPath is not a random job generator.  
+            It is a structured, human-centered process modeled after the best career coaching systems in the world.
+        </p>
+
+        <p id="about-based-on">
+            It is inspired by tools and approaches from:
+        </p>
+
+        <ul id="about-list">
+            <li>Kathy Caprino’s Career Breakthrough frameworks</li>
+            <li><em>What Color Is Your Parachute?</em> by Richard Bolles</li>
+            <li>ICF coaching principles (powerful questions, reflection, clarity)</li>
+            <li>McKinsey-style strategic role mapping</li>
+            <li>Strengths-based psychology & evidence-based coaching</li>
+        </ul>
+
+        <p id="about-result">
+            The program uses deep, targeted questions to help you identify your  
+            <strong>energy, strengths, values, natural patterns and ideal direction</strong>.  
+            You then translate that into a realistic 90-day plan.
         </p>
     </div>
 
-    <!-- HOW TO START -->
+
+    <!-- =========================================================
+         SECTION — EXPERT CARD
+    ========================================================== -->
     <div class="card">
-        <h2 id="start-title">How to start</h2>
+        <h2 id="expert-title">Recommended by Career Coaches</h2>
+
+        <div class="expert-card">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734b0a4?auto=format&fit=crop&w=1470&q=80"
+            alt="Career Expert Photo"
+            style="width:100%; border-radius:14px; margin-bottom:16px;">
+
+            <h3 style="margin:0; font-size:20px;" id="expert-role">ClarifyPath</h3>
+
+            <p id="expert-bio">
+                ClarifyPath is recommended by several career strategists as an excellent  
+                first step for clarifying your professional identity and direction.  
+                It provides a structured, unbiased framework, offering clarity before 
+                you invest in formal coaching or training.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- =========================================================
+         SECTION — HOW TO START (WITH PROMPT)
+    ========================================================== -->
+    <div class="card">
+        <h2 id="start-title">How to start (copy–paste)</h2>
+
         <p id="start-text">
-            Open ChatGPT and paste the exact text below.  
-            ClarifyPath will automatically launch Session 1 and guide you step-by-step.
+            Open ChatGPT, start a new conversation, and paste the exact text below.  
+            ClarifyPath will automatically launch Session 1 and wait for your answers.
         </p>
 
 <pre id="prompt-block">
@@ -303,57 +347,105 @@ Please start with Session 1 and ask me the questions in multiple-choice format.
 At the end of each session, pause and wait for my “Post-session Feedback” before continuing.
 </pre>
 
-        <button class="button" onclick="copyPrompt()" id="copy-btn-2">Copy Start Prompt</button>
+        <button class="button" onclick="copyPrompt()" id="copy-btn-2">
+            Copy Start Prompt
+        </button>
     </div>
 
-    <!-- SESSIONS -->
-    <div class="card">
-        <h2 id="process-title">The 5 ClarifyPath Sessions</h2>
 
-        <ul id="process-list">
-            <li><strong>SPARK</strong> – Energy, motivation, and meaning</li>
-            <li><strong>SHAPE</strong> – Strengths, talents, natural patterns</li>
-            <li><strong>SHIFT</strong> – What must evolve and why</li>
-            <li><strong>SYSTEMS</strong> – Matching you with the right career “system”</li>
-            <li><strong>SOAR</strong> – Identity + 90-day action plan</li>
+   <!-- =========================================================
+         SECTION — HOW THE 5 SESSIONS WORK
+    ========================================================== -->
+    <div class="card">
+        <h2 id="how-title">How the 5-session program works</h2>
+        <p id="how-text">
+            The AI coach will guide you through five structured sessions.  
+            Each session builds on the last to lead you toward clarity and action.
+        </p>
+
+        <ul id="how-list">
+            <li><strong>SPARK</strong> – Energy, motivation, purpose.</li>
+            <li><strong>SHAPE</strong> – Strengths, talents, natural patterns.</li>
+            <li><strong>SHIFT</strong> – What must change and why.</li>
+            <li><strong>SYSTEMS</strong> – Your ideal career ecosystem.</li>
+            <li><strong>SOAR</strong> – Identity + 90-day action plan.</li>
         </ul>
     </div>
 
-    <!-- WHO IS IT FOR -->
+
+    <!-- =========================================================
+         SECTION — WHO IS THIS FOR?
+    ========================================================== -->
     <div class="card">
-        <h2 id="who-title">Who is ClarifyPath for?</h2>
+        <h2 id="who-title">Who is this for?</h2>
         <p id="who-text">
-            For people who feel lost, stuck, multi-potential, curious, or unsure about their next step.
+            ClarifyPath is designed for people who:
+        </p>
+
+        <ul id="who-list">
+            <li>Are multi-potential and curious</li>
+            <li>Like many things and struggle to choose</li>
+            <li>Feel stuck or misaligned in their current path</li>
+            <li>Want meaningful, strategic or impactful work</li>
+            <li>Prefer deep, structured questions</li>
+        </ul>
+
+        <p id="who-final">
+            You don’t need clarity to begin — this process creates clarity.
         </p>
     </div>
 
-    <!-- OUTCOME -->
+
+    <!-- =========================================================
+         SECTION — WHAT YOU’LL WALK AWAY WITH
+    ========================================================== -->
     <div class="card">
-        <h2 id="outcome-title">What you will gain</h2>
-        <ul id="outcome-list">
-            <li>A clear understanding of your core strengths</li>
+        <h2 id="gain-title">What you’ll walk away with</h2>
+
+        <p id="gain-text">By the end of the 5 sessions, you will have:</p>
+
+        <ul id="gain-list">
+            <li>A clear picture of your strengths, motivations, and patterns</li>
             <li>2–3 aligned career directions</li>
-            <li>A professional language to describe your profile</li>
-            <li>A realistic 90-day action plan</li>
-            <li>A method you can reuse anytime</li>
+            <li>A language to describe your professional identity</li>
+            <li>A realistic, actionable 90-day plan</li>
+            <li>A reusable method for making future career decisions</li>
         </ul>
+
+        <span class="badge" id="badge-confidential">
+            Confidential · Self-paced · Reusable
+        </span>
     </div>
 
-</div>
+</div> <!-- end .container -->
 
 
 <!-- =========================================================
-     SCRIPTS (LANG + DARK MODE + COPY)
+     FOOTER
+========================================================= -->
+<footer style="padding: 20px 0; text-align:center; opacity:0.7; font-size:13px;">
+    © 2025 ClarifyPath · 
+    <a href="#" style="color:inherit; text-decoration:none;">Privacy</a> · 
+    <a href="#" style="color:inherit; text-decoration:none;">Terms</a>
+</footer>
+
+
+<!-- =========================================================
+     SCRIPTS — LANGUAGE, DARK MODE, COPY PROMPT
 ========================================================= -->
 <script>
-/* DARK MODE */
+/* =========================================================
+   DARK MODE TOGGLER WITH PERSISTENCE
+========================================================= */
 function toggleDarkMode() {
     document.documentElement.classList.toggle('dark-mode');
-    const active = document.documentElement.classList.contains('dark-mode');
-    localStorage.setItem('theme', active ? 'dark' : 'light');
+    const isDark = document.documentElement.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
 }
+
 document.getElementById("darkToggle").addEventListener("change", toggleDarkMode);
 
+// Load saved theme
 (function(){
     const saved = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -364,7 +456,9 @@ document.getElementById("darkToggle").addEventListener("change", toggleDarkMode)
 })();
 
 
-/* COPY PROMPT */
+/* =========================================================
+   COPY PROMPT
+========================================================= */
 function copyPrompt() {
     const text = document.getElementById("prompt-block").innerText.trim();
     navigator.clipboard.writeText(text);
@@ -378,44 +472,69 @@ function copyPromptAlert() {
 }
 
 
-/* LANGUAGE SWITCH */
+/* =========================================================
+   LANGUAGE SWITCH
+========================================================= */
 function setLanguage(lang) {
 
     const en = {
-        heroSubtitle: "A structured 5-session program to find your ideal career direction.",
-        aboutTitle: "What is ClarifyPath?",
-        aboutText: "ClarifyPath is a guided 5-session process based on modern coaching psychology, career reinvention frameworks, and strategic decision-making tools.",
-        startTitle: "How to start",
+        subtitle: "A structured 5-session program to find your ideal career direction.",
+        aboutTitle: "Why this AI agent is relevant",
+        aboutText: "ClarifyPath is not a random job generator. It is a structured, human-centered process modeled after the best career coaching systems in the world.",
+        aboutBasedOn: "It is inspired by tools and approaches from:",
+        aboutResult: "The program uses deep questions to help you identify your strengths, values, patterns and ideal direction, and turns that into a 90-day plan.",
+        expertTitle: "Recommended by Career Coaches",
+        startTitle: "How to start (copy–paste)",
         startText: "Open ChatGPT and paste the exact text below.",
-        processTitle: "The 5 ClarifyPath Sessions",
-        whoTitle: "Who is ClarifyPath for?",
-        whoText: "For people who feel lost, stuck, or unsure about their next step.",
-        outcomeTitle: "What you will gain"
+        howTitle: "How the 5-session program works",
+        howText: "Each session leads you toward clarity and builds on the previous one.",
+        whoTitle: "Who is this for?",
+        whoText: "ClarifyPath is designed for people who:",
+        whoFinal: "You don’t need clarity to begin — this process creates clarity.",
+        gainTitle: "What you’ll walk away with",
+        gainText: "By the end of the 5 sessions, you will have:"
     };
 
     const fr = {
-        heroSubtitle: "Un programme structuré en 5 sessions pour trouver ta direction professionnelle idéale.",
-        aboutTitle: "Qu'est-ce que ClarifyPath ?",
-        aboutText: "ClarifyPath est un processus guidé en 5 sessions basé sur la psychologie du coaching, les frameworks de reconversion moderne et des outils d’analyse stratégique.",
-        startTitle: "Comment commencer",
+        subtitle: "Un programme structuré en 5 sessions pour découvrir ta direction professionnelle idéale.",
+        aboutTitle: "Pourquoi cet agent IA est pertinent",
+        aboutText: "ClarifyPath n'est pas un générateur aléatoire de métiers. C'est un processus humain, structuré, basé sur les meilleures approches de coaching de carrière.",
+        aboutBasedOn: "Il s’inspire d’outils et de méthodologies tels que :",
+        aboutResult: "Le programme utilise des questions profondes pour clarifier tes forces, valeurs, motivations et direction idéale — puis transforme tout cela en plan d’action sur 90 jours.",
+        expertTitle: "Recommandé par des coachs de carrière",
+        startTitle: "Comment commencer (copier–coller)",
         startText: "Ouvre ChatGPT et colle le texte ci-dessous.",
-        processTitle: "Les 5 sessions ClarifyPath",
-        whoTitle: "Pour qui est ClarifyPath ?",
-        whoText: "Pour les personnes perdues, bloquées, multipotentielles ou incertaines de leur prochaine étape.",
-        outcomeTitle: "Ce que tu vas obtenir"
+        howTitle: "Comment fonctionne le programme en 5 sessions",
+        howText: "Chaque session construit plus de clarté et mène vers une direction concrète.",
+        whoTitle: "Pour qui est-ce fait ?",
+        whoText: "ClarifyPath est conçu pour les personnes qui :",
+        whoFinal: "Tu n’as pas besoin d’être clair — ce processus crée la clarté.",
+        gainTitle: "Ce que tu obtiendras",
+        gainText: "À la fin des 5 sessions, tu auras :"
     };
 
-    const t = lang === 'fr' ? fr : en;
+    const t = lang === "fr" ? fr : en;
 
-    document.getElementById("hero-subtitle").innerText = t.heroSubtitle;
+    document.getElementById("hero-subtitle").innerText = t.subtitle;
     document.getElementById("about-title").innerText = t.aboutTitle;
     document.getElementById("about-text").innerText = t.aboutText;
+    document.getElementById("about-based-on").innerText = t.aboutBasedOn;
+    document.getElementById("about-result").innerText = t.aboutResult;
+
+    document.getElementById("expert-title").innerText = t.expertTitle;
+
     document.getElementById("start-title").innerText = t.startTitle;
     document.getElementById("start-text").innerText = t.startText;
-    document.getElementById("process-title").innerText = t.processTitle;
+
+    document.getElementById("how-title").innerText = t.howTitle;
+    document.getElementById("how-text").innerText = t.howText;
+
     document.getElementById("who-title").innerText = t.whoTitle;
     document.getElementById("who-text").innerText = t.whoText;
-    document.getElementById("outcome-title").innerText = t.outcomeTitle;
+    document.getElementById("who-final").innerText = t.whoFinal;
+
+    document.getElementById("gain-title").innerText = t.gainTitle;
+    document.getElementById("gain-text").innerText = t.gainText;
 }
 
 </script>
