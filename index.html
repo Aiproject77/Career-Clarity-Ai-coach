@@ -3,299 +3,451 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Career Clarity AI Coach – Bilingual</title>
-<meta name="description" content="A bilingual 5-session career clarity program powered by AI & proven coaching frameworks – SPARK, SHAPE, SHIFT, SYSTEMS, SOAR." />
-<meta property="og:title" content="Career Clarity AI Coach" />
-<meta property="og:description" content="Discover your ideal career path with a structured 5-session method. English / Français." />
+<title>ClarityPath AI – Career Clarity Program</title>
+
+<!-- SEO -->
+<meta name="description" content="ClarityPath AI helps you find career clarity through a proven 5-session method: SPARK, SHAPE, SHIFT, SYSTEMS, SOAR. Bilingual English/French." />
+<meta property="og:title" content="ClarityPath AI – Career Clarity Program" />
+<meta property="og:description" content="Discover your ideal career path using evidence-based coaching and a guided 5-step AI program." />
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="Career Clarity AI Coach" />
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
+/* ROOT COLORS (Palette A3 – Sky Blue + Royal Blue) */
 :root {
-  --bg-light: #f4f4f9;
-  --text-light: #222;
-  --card-light: #ffffff;
-  --accent: #4cc9f0;
-  --accent-soft: #2d3f7a;
-  --bg-dark: #050711;
-  --card-dark: #141827;
-  --text-dark: #e0e4ff;
+  --blue-sky: #38bdf8;
+  --blue-royal: #1d4ed8;
+  --text-dark: #e3eaff;
+  --text-light: #1d1d1f;
+  --bg-light: #f8fafc;
+  --bg-dark: #0a0e1a;
+  --glass-light: rgba(255,255,255,0.45);
+  --glass-dark: rgba(255,255,255,0.08);
+  --border-light: rgba(0,0,0,0.1);
+  --border-dark: rgba(255,255,255,0.15);
 }
+
 html {
   scroll-behavior: smooth;
 }
+
 body {
-  margin:0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", Arial, sans-serif;
+  margin: 0;
+  font-family: "Inter", "DM Sans", sans-serif;
   background: var(--bg-light);
   color: var(--text-light);
-  transition: background .3s, color .3s;
+  transition: background 0.3s ease, color 0.3s ease;
+  line-height: 1.7;
 }
+
 .dark-mode body {
   background: var(--bg-dark);
   color: var(--text-dark);
 }
-.container {
-  max-width: 960px;
-  margin: auto;
-  padding: 20px;
+
+/* NAVIGATION – Sticky Blur (M1) */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  backdrop-filter: blur(14px);
+  background: rgba(255,255,255,0.55);
+  padding: 10px 20px;
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-light);
 }
-header {
-  background: radial-gradient(circle at top left, var(--accent), var(--accent-soft));
-  color: white;
-  text-align: center;
-  padding: 32px 20px 40px;
-  border-bottom: 4px solid rgba(255,255,255,0.18);
-  position: relative;
+
+.dark-mode nav {
+  background: rgba(15, 23, 42, 0.55);
+  border-bottom-color: var(--border-dark);
 }
-.dark-mode header {
-  background: radial-gradient(circle at top left, #3bc9db, #111423);
-  border-bottom-color: rgba(0,0,0,0.4);
+
+nav .left,
+nav .right {
+  display: flex;
+  gap: 14px;
+  align-items: center;
 }
-header h1 { margin:0 0 10px; font-size:30px; font-weight:700; }
-header p { margin:0 0 20px; font-size:17px; opacity:.95; }
-.hero-buttons {
-  display:flex; flex-wrap:wrap; justify-content:center; gap:10px;
+
+nav a {
+  font-weight: 600;
+  color: var(--text-light);
+  text-decoration: none;
 }
-button, a.button {
-  background: #1b1f3b;
-  color:white;
-  padding:10px 18px;
-  border:none;
-  border-radius:999px;
-  cursor:pointer;
-  transition:transform .15s, box-shadow .15s, background .2s;
-  text-decoration:none;
-  display:inline-flex; align-items:center; gap:6px;
-  font-size:15px; font-weight:600;
-}
-button:hover, a.button:hover {
-  background:#2d3f7a;
-  box-shadow:0 4px 10px rgba(0,0,0,0.25);
-  transform:translateY(-1px);
-}
-.dark-mode button, .dark-mode a.button {
-  background:#272f4f;
-}
-.dark-mode button:hover, .dark-mode a.button:hover {
-  background:#343d63;
-}
-.top-controls {
-  display:flex; justify-content:flex-end; gap:8px; padding:10px 14px 0;
-}
-.section {
-  background: var(--card-light);
-  padding:24px 22px;
-  border-radius:16px;
-  margin:20px 0;
-  box-shadow:0 6px 16px rgba(15,23,42,0.09);
-  opacity:0; transform: translateY(12px);
-  animation: fadeInUp 0.6s ease forwards;
-}
-.dark-mode .section {
-  background: var(--card-dark);
+
+.dark-mode nav a {
   color: var(--text-dark);
-  box-shadow:0 8px 24px rgba(0,0,0,0.6);
 }
+
+nav button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 999px;
+  background: var(--blue-royal);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+nav button:hover {
+  background: #1e3aa9;
+}
+
+/* HERO */
+header {
+  padding: 120px 20px 60px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--blue-sky), var(--blue-royal));
+  color: white;
+}
+
+header h1 {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+header p {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* BUTTONS */
+.btn {
+  background: white;
+  color: var(--blue-royal);
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+/* GLASS CARDS (S1) */
+.section {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 20px;
+  background: var(--glass-light);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+  animation: fadeInUp 0.8s ease;
+}
+
+.dark-mode .section {
+  background: var(--glass-dark);
+  border-color: var(--border-dark);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
 .section h2 {
-  margin-top:0;
-  font-size:22px;
-  color:#1b1f3b;
+  margin-top: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--blue-royal);
 }
+
 .dark-mode .section h2 {
-  color:#e5f5ff;
+  color: var(--blue-sky);
 }
-pre {
-  background:#ececf5;
-  padding:14px;
-  border-radius:10px;
-  border:1px solid rgba(15,23,42,0.12);
-  font-size:13px;
+
+/* ACCORDION FAQ */
+.accordion {
+  background: transparent;
+  border: none;
+  text-align: left;
+  width: 100%;
+  padding: 12px;
+  font-size: 17px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-light);
 }
-.dark-mode pre {
-  background:#181c2b;
-  color:#e0e4ff;
-  border-color:rgba(148,163,255,0.35);
+
+.dark-mode .accordion {
+  border-bottom: 1px solid var(--border-dark);
+  color: var(--text-dark);
 }
+
+.panel {
+  display: none;
+  padding: 14px;
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+/* QUIZ */
+.quiz-question {
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.quiz-option {
+  background: rgba(255,255,255,0.6);
+  padding: 10px;
+  border-radius: 12px;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.quiz-option:hover {
+  background: rgba(255,255,255,0.85);
+}
+
+.dark-mode .quiz-option {
+  background: rgba(255,255,255,0.08);
+}
+
+.dark-mode .quiz-option:hover {
+  background: rgba(255,255,255,0.18);
+}
+
+/* COPY TOAST */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--blue-royal);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.4s;
+  z-index: 9999;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+/* ANIMATIONS */
 @keyframes fadeInUp {
-  0% { opacity:0; transform:translateY(12px); }
-  100% { opacity:1; transform:translateY(0); }
+  0% {opacity:0; transform:translateY(20px);}
+  100% {opacity:1; transform:translateY(0);}
 }
-@media (max-width:600px) {
-  header h1 { font-size:24px; }
-  .section { padding:20px 16px; }
-}
-footer {
-  text-align:center;
-  font-size:14px;
-  padding:30px 0 10px;
-  color:rgba(34,34,34,0.6);
-}
-.dark-mode footer {
-  color:rgba(224,228,255,0.5);
+
+/* MOBILE */
+@media (max-width: 600px) {
+  header h1 { font-size: 30px; }
+  nav .left a { display: none; }
 }
 </style>
 </head>
 
 <body>
-<div class="top-controls">
-  <button id="lang-en-btn" onclick="setLanguage('en')">EN</button>
-  <button id="lang-fr-btn" onclick="setLanguage('fr')">FR</button>
-  <button id="darkToggle" onclick="toggleDarkMode()">🌙 / ☀</button>
-</div>
 
-<header>
-  <h1 id="hero-title">Career Clarity AI Coach</h1>
-  <p id="hero-subtitle">A 5-session, structured career program powered by coaching psychology and top career frameworks.</p>
+<!-- NAVIGATION -->
+<nav>
+  <div class="left">
+    <a href="#top" id="nav-title">ClarityPath AI</a>
+    <a href="#start">Start</a>
+    <a href="#method">Program</a>
+    <a href="#sessions">Sessions</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <div class="right">
+    <button onclick="setLanguage('en')">EN</button>
+    <button onclick="setLanguage('fr')">FR</button>
+    <button onclick="toggleDark()">🌙</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header id="top">
+  <h1 id="hero-title">ClarityPath AI</h1>
+  <p id="hero-subtitle">A modern, evidence-based 5-session career clarity program powered by AI.</p>
   <div class="hero-buttons">
-    <button onclick="copyPrompt()">📋 Copy Start Prompt</button>
-    <a href="#how-it-works" class="button">🔎 How it works</a>
+    <button class="btn" onclick="copyPrompt()">📋 Copy Start Prompt</button>
+    <button class="btn" onclick="scrollToMethod()">How it works</button>
   </div>
 </header>
 
-<div class="container">
-  <section class="section" id="about-section">
-    <h2 id="about-title">Why this AI agent is relevant</h2>
-    <p id="about-text">This AI Career Coach doesn’t give random job lists. It guides you through a structured, human-centered process used by top career coaches and transition experts.</p>
-    <p id="about-based-on">It is inspired by tools and approaches from:</p>
-    <ul id="about-list">
-      <li>Kathy Caprino – modern career reinvention</li>
-      <li>Richard Bolles – “What Color Is Your Parachute?” (strengths & experiment)</li>
-      <li>ICF Core Competencies – deep coaching questions & ethics</li>
-      <li>McKinsey Career Architecture – role systems & value creation</li>
-      <li>Strengths-based coaching & positive psychology</li>
-    </ul>
-    <p id="about-result">The agent uses targeted, deep questions to help you clarify your energy, strengths, values, work style and ideal direction – then turns that into a realistic 90-day plan.</p>
-  </section>
+<!-- ABOUT METHOD -->
+<section class="section" id="method">
+  <h2 id="method-title">About the ClarityPath Method</h2>
+  <p id="method-text">
+    ClarityPath AI is based on research-backed career coaching models used by:
+    <br><br>• Kathy Caprino (career reinvention)
+    <br>• Richard Bolles (What Color Is Your Parachute)
+    <br>• ICF Coaching Core Competencies
+    <br>• McKinsey Career Architecture
+    <br>• Strengths-based psychology
+  </p>
+</section>
 
-  <section class="section">
-    <h2 id="start-title">How to start (copy-paste)</h2>
-    <p id="start-text">Open ChatGPT, start a new conversation and paste the exact text below. The AI will automatically launch Session 1 and guide you through all 5 sessions.</p>
-    <pre id="prompt-block">"I want to start the full 5-session Career Clarity Program (SPARK, SHAPE, SHIFT, SYSTEMS, SOAR).  
-Please start with Session 1 and ask me the questions in multiple-choice format, and wait for my answers before moving to the next session."</pre>
-    <button onclick="copyPrompt()">📋 Copy Start Prompt</button>
-  </section>
+<!-- START INSTRUCTIONS -->
+<section class="section" id="start">
+  <h2 id="start-title">How to Start (Copy & Paste)</h2>
+  <p id="start-text">Paste this into ChatGPT to begin Session 1:</p>
 
-  <section class="section" id="how-it-works">
-    <h2 id="how-title">How the 5-session program works</h2>
-    <p id="how-text">The AI coach will take you through five structured sessions. Each one builds on the previous to give you clarity and a concrete next step.</p>
-    <ul id="how-list">
-      <li><strong>SPARK</strong> – Motivation & energy drivers</li>
-      <li><strong>SHAPE</strong> – Strengths, talent patterns, natural gifts</li>
-      <li><strong>SHIFT</strong> – What needs to evolve in your career</li>
-      <li><strong>SYSTEMS</strong> – Choosing the right career paths</li>
-      <li><strong>SOAR</strong> – Defining your long-term identity & 90-day plan</li>
-    </ul>
-  </section>
+  <pre id="prompt-block">
+"I want to start the full 5-session Career Clarity Program (SPARK, SHAPE, SHIFT, SYSTEMS, SOAR). Please start with Session 1 and ask me the questions in multiple-choice format."
+  </pre>
 
-  <section class="section">
-    <h2 id="who-title">Who is this for?</h2>
-    <p id="who-text">This AI career agent is designed for people who:</p>
-    <ul id="who-list">
-      <li>Like many things and struggle to choose a single path</li>
-      <li>Are multi-potential, curious, and don’t fit in a narrow box</li>
-      <li>Feel stuck, bored or misaligned in their current job</li>
-      <li>Want a more meaningful, strategic, or human-centered role</li>
-      <li>Prefer deep, structured questions instead of generic advice</li>
-    </ul>
-    <p id="who-final">You don’t need to know “what you want to do” to start. The program is made precisely for those who are unsure, overwhelmed, or in transition.</p>
-  </section>
+  <button class="btn" onclick="copyPrompt()">📋 Copy Start Prompt</button>
+</section>
 
-  <section class="section">
-    <h2 id="gain-title">What you’ll walk away with</h2>
-    <p id="gain-text">At the end of the 5 sessions, you will have:</p>
-    <ul id="gain-list">
-      <li>A clearer picture of your strengths, style and values</li>
-      <li>2-3 career directions that truly fit who you are</li>
-      <li>A language to describe your profile to employers or coaches</li>
-      <li>A realistic 90-day action plan to test, learn and move forward</li>
-      <li>The option to reuse the process later when your life evolves</li>
-    </ul>
-    <span class="badge" id="badge-confidential">Confidential · Self-paced · Reusable</span>
-  </section>
+<!-- SESSIONS OVERVIEW -->
+<section class="section" id="sessions">
+  <h2 id="sessions-title">The 5 Sessions</h2>
+  <ul id="sessions-list">
+    <li><strong>SPARK</strong> – Your energy & motivation</li>
+    <li><strong>SHAPE</strong> – Strengths & natural gifts</li>
+    <li><strong>SHIFT</strong> – What must evolve</li>
+    <li><strong>SYSTEMS</strong> – Choosing career systems</li>
+    <li><strong>SOAR</strong> – Identity & 90-day plan</li>
+  </ul>
+</section>
 
-</div>
+<!-- QUIZ -->
+<section class="section">
+  <h2 id="quiz-title">Mini Quiz: What's Your Work Style?</h2>
 
-<footer>
-  <p>© 2025 Patrick – All rights reserved / Tous droits réservés</p>
-</footer>
+  <div class="quiz-question">1. How do you prefer to work?</div>
+  <div class="quiz-option">Alone, in deep focus</div>
+  <div class="quiz-option">In small creative groups</div>
+  <div class="quiz-option">Leading or facilitating others</div>
+
+  <div class="quiz-question">2. What motivates you most?</div>
+  <div class="quiz-option">Clarity & structure</div>
+  <div class="quiz-option">Helping others grow</div>
+  <div class="quiz-option">Solving complex problems</div>
+
+  <div class="quiz-question">3. What drains you?</div>
+  <div class="quiz-option">Repetition</div>
+  <div class="quiz-option">Lack of meaning</div>
+  <div class="quiz-option">Chaotic environments</div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <h2 id="faq-title">FAQ</h2>
+
+  <button class="accordion">Is this confidential?</button>
+  <div class="panel">
+    Yes. Nothing is saved unless you manually save it. This is a self-guided private tool.
+  </div>
+
+  <button class="accordion">How long does it take?</button>
+  <div class="panel">
+    Each session takes 10–15 minutes. The full program is about 60 minutes.
+  </div>
+
+  <button class="accordion">Is it evidence-based?</button>
+  <div class="panel">
+    Yes. It uses modern coaching psychology, ICF methods, strengths-based approaches, and structured decision frameworks.
+  </div>
+
+  <button class="accordion">Is it free?</button>
+  <div class="panel">
+    Yes. You can run the full process inside ChatGPT for free.
+  </div>
+
+  <button class="accordion">What if I like many things?</button>
+  <div class="panel">
+    This tool is designed exactly for multi-potential people who struggle to choose.
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="toast" id="toast">Copied!</div>
+
+</body>
 
 <script>
-function toggleDarkMode() {
+/* DARK MODE */
+function toggleDark() {
   document.documentElement.classList.toggle("dark-mode");
 }
+
+/* COPY PROMPT */
 function copyPrompt() {
   const text = document.getElementById("prompt-block").innerText.trim();
-  navigator.clipboard.writeText(text).then(() => {
-    alert("Prompt copied. Open ChatGPT and paste it to start the program.");
-  }).catch(() => {
-    alert("Copy failed; please select and copy the text manually.");
+  navigator.clipboard.writeText(text)
+    .then(() => showToast())
+    .catch(() => alert("Copy manually."));
+}
+
+/* TOAST */
+function showToast() {
+  const toast = document.getElementById("toast");
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 1600);
+}
+
+/* SMOOTH SCROLL SHORTCUT */
+function scrollToMethod() {
+  document.getElementById("method").scrollIntoView({ behavior: "smooth" });
+}
+
+/* FAQ ACCORDION */
+const acc = document.getElementsByClassName("accordion");
+for (let i=0;i<acc.length;i++) {
+  acc[i].addEventListener("click", function () {
+    this.classList.toggle("active");
+    const panel = this.nextElementSibling;
+    panel.style.display = panel.style.display === "block" ? "none" : "block";
   });
 }
+
+/* MULTI-LANGUAGE */
 function setLanguage(lang) {
   const en = {
-    heroTitle: "Career Clarity AI Coach",
-    heroSubtitle: "A 5-session, structured career program powered by coaching psychology and top career frameworks.",
-    aboutTitle: "Why this AI agent is relevant",
-    aboutText: "This AI Career Coach doesn’t give random job lists. It guides you through a structured, human-centered process used by top career coaches and transition experts.",
-    aboutBasedOn: "It is inspired by tools and approaches from:",
-    aboutResult: "The agent uses targeted, deep questions to help you clarify your energy, strengths, values, work style and ideal direction – then turns that into a realistic 90-day plan.",
-    startTitle: "How to start (copy-paste)",
-    startText: "Open ChatGPT, start a new conversation and paste the exact text below. The AI will automatically launch Session 1 and guide you through all 5 sessions.",
-    howTitle: "How the 5-session program works",
-    howText: "The AI coach will take you through five structured sessions. Each one builds on the previous to give you clarity and a concrete next step.",
-    whoTitle: "Who is this for?",
-    whoText: "This AI career agent is designed for people who:",
-    whoFinal: "You don’t need to know “what you want to do” to start. The program is made precisely for those who are unsure, overwhelmed, or in transition.",
-    gainTitle: "What you’ll walk away with",
-    gainText: "At the end of the 5 sessions, you will have:",
-    badge: "Confidential · Self-paced · Reusable"
+    heroTitle: "ClarityPath AI",
+    heroSubtitle: "A modern, evidence-based 5-session career clarity program powered by AI.",
+    methodTitle: "About the ClarityPath Method",
+    methodText: "ClarityPath AI is based on career coaching models used by Kathy Caprino, Richard Bolles, ICF coaching, McKinsey Career Architecture, and strengths psychology.",
+    startTitle: "How to Start (Copy & Paste)",
+    startText: "Paste this into ChatGPT to begin Session 1:",
+    sessionsTitle: "The 5 Sessions",
+    quizTitle: "Mini Quiz: What's Your Work Style?",
+    faqTitle: "FAQ",
   };
 
   const fr = {
-    heroTitle: "Coach IA – Clarté de Carrière",
-    heroSubtitle: "Un parcours structuré en 5 sessions, basé sur la psychologie du coaching et les meilleurs outils de carrière.",
-    aboutTitle: "Pourquoi cet agent IA est pertinent",
-    aboutText: "Ce coach de carrière IA ne vous donne pas une liste de métiers au hasard. Il vous fait passer par un vrai processus structuré, humain, utilisé par les meilleurs coachs de carrière et spécialistes de la transition.",
-    aboutBasedOn: "Il s’inspire d’outils et d’approches comme :",
-    aboutResult: "L’agent utilise des questions ciblées et profondes pour clarifier votre énergie, vos forces, vos valeurs, votre style de travail et la direction idéale – puis les transforme en plan d’action réaliste sur 90 jours.",
+    heroTitle: "ClarityPath AI",
+    heroSubtitle: "Un programme moderne de clarté de carrière en 5 sessions, basé sur la science et optimisé par l'IA.",
+    methodTitle: "À propos de la méthode ClarityPath",
+    methodText: "ClarityPath AI s’appuie sur des modèles de coaching utilisés par Kathy Caprino, Richard Bolles, l’ICF, l’architecture de carrière McKinsey et la psychologie des forces.",
     startTitle: "Comment commencer (copier-coller)",
-    startText: "Ouvrez ChatGPT, créez une nouvelle conversation et collez exactement le texte ci-dessous. L’IA lancera automatiquement la Session 1 et vous accompagnera dans les 5 sessions.",
-    howTitle: "Comment fonctionne le programme en 5 sessions",
-    howText: "Le coach IA vous fait passer par cinq sessions structurées. Chaque étape s’appuie sur la précédente pour vous apporter de la clarté et un prochain pas concret.",
-    whoTitle: "Pour qui est-ce fait ?",
-    whoText: "Cet agent de carrière IA est conçu pour les personnes qui :",
-    whoFinal: "Vous n’avez pas besoin de savoir « ce que vous voulez faire » pour commencer. Le programme est justement fait pour celles et ceux qui sont perdus, en transition ou attirés par plusieurs choses.",
-    gainTitle: "Ce que vous aurez à la fin",
-    gainText: "Au terme des 5 sessions, vous aurez :",
-    badge: "Confidentiel · À votre rythme · Réutilisable"
+    startText: "Collez ceci dans ChatGPT pour commencer la Session 1 :",
+    sessionsTitle: "Les 5 sessions",
+    quizTitle: "Mini Quiz : Quel est ton style de travail ?",
+    faqTitle: "FAQ",
   };
 
   const d = lang === "fr" ? fr : en;
 
   document.getElementById("hero-title").innerText = d.heroTitle;
   document.getElementById("hero-subtitle").innerText = d.heroSubtitle;
-
-  document.getElementById("about-title").innerText = d.aboutTitle;
-  document.getElementById("about-text").innerText = d.aboutText;
-  document.getElementById("about-based-on").innerText = d.aboutBasedOn;
-  document.getElementById("about-result").innerText = d.aboutResult;
-
+  document.getElementById("method-title").innerText = d.methodTitle;
+  document.getElementById("method-text").innerText = d.methodText;
   document.getElementById("start-title").innerText = d.startTitle;
   document.getElementById("start-text").innerText = d.startText;
-
-  document.getElementById("how-title").innerText = d.howTitle;
-  document.getElementById("how-text").innerText = d.howText;
-
-  document.getElementById("who-title").innerText = d.whoTitle;
-  document.getElementById("who-text").innerText = d.whoText;
-  document.getElementById("who-final").innerText = d.whoFinal;
-
-  document.getElementById("gain-title").innerText = d.gainTitle;
-  document.getElementById("gain-text").innerText = d.gainText;
-  document.getElementById("badge-confidential").innerText = d.badge;
+  document.getElementById("sessions-title").innerText = d.sessionsTitle;
+  document.getElementById("quiz-title").innerText = d.quizTitle;
+  document.getElementById("faq-title").innerText = d.faqTitle;
 }
 </script>
 
-</body>
 </html>
