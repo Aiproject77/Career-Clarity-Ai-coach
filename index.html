@@ -1,170 +1,421 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Career Clarity Program – AI Coach</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Career Clarity AI Coach – Bilingual</title>
+
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        background: #f5f6fa;
-        color: #333;
-    }
-    header {
-        background: #1b1f3b;
-        padding: 20px;
-        text-align: center;
-        color: white;
-    }
-    .container {
-        max-width: 900px;
-        margin: auto;
-        padding: 20px;
-    }
-    h2 {
-        color: #1b1f3b;
-    }
-    .language-switch {
-        text-align: right;
-        margin: 10px;
-    }
-    button {
-        padding: 10px 18px;
-        background: #1b1f3b;
-        color: white;
-        border: none;
-        cursor: pointer;
-        border-radius: 6px;
-        font-size: 16px;
-    }
-    button:hover {
-        background: #2c3160;
-    }
-    .section {
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 25px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-    }
-    pre {
-        background: #eee;
-        padding: 15px;
-        border-radius: 6px;
-        white-space: pre-wrap;
-        font-size: 14px;
-    }
+/* ------------------------------
+   GLOBAL
+--------------------------------*/
+:root {
+  --bg-light: #f4f4f9;
+  --text-light: #222;
+  --card-light: #ffffff;
+  --accent: #4cc9f0;
+  --accent-soft: #2d3f7a;
+  --bg-dark: #050711;
+  --card-dark: #141827;
+  --text-dark: #e0e4ff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", Arial, sans-serif;
+  line-height: 1.7;
+  background: var(--bg-light);
+  color: var(--text-light);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.dark-mode body {
+  background: radial-gradient(circle at top, #15192a, #050711);
+  color: var(--text-dark);
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ------------------------------
+   HEADER / HERO
+--------------------------------*/
+header {
+  background: radial-gradient(circle at top left, #4cc9f0, #1b1f3b);
+  color: white;
+  padding: 32px 20px 40px;
+  text-align: center;
+  border-bottom: 4px solid rgba(255,255,255,0.18);
+}
+
+.dark-mode header {
+  background: radial-gradient(circle at top left, #3bc9db, #111423);
+  border-bottom-color: rgba(0,0,0,0.4);
+}
+
+#hero-title {
+  margin: 0 0 10px;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+#hero-subtitle {
+  margin: 0 0 18px;
+  font-size: 17px;
+  opacity: 0.95;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ------------------------------
+   BUTTONS
+--------------------------------*/
+button,
+a.button {
+  background: #1b1f3b;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s;
+}
+
+button:hover,
+a.button:hover {
+  background: #2d3f7a;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  transform: translateY(-1px);
+}
+
+.dark-mode button,
+.dark-mode a.button {
+  background: #272f4f;
+}
+
+.dark-mode button:hover,
+.dark-mode a.button:hover {
+  background: #343d63;
+}
+
+#lang-en-btn, #lang-fr-btn {
+  padding-inline: 14px;
+  font-size: 14px;
+}
+
+#darkToggle {
+  background: #4cc9f0;
+  color: #04101d;
+}
+
+.dark-mode #darkToggle {
+  background: #3bc9db;
+  color: #000;
+}
+
+/* ------------------------------
+   TOP CONTROLS (LANG + THEME)
+--------------------------------*/
+.top-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 10px 14px 0;
+}
+
+/* ------------------------------
+   SECTIONS / CARDS
+--------------------------------*/
+.section {
+  background: var(--card-light);
+  padding: 24px 22px;
+  border-radius: 16px;
+  margin: 20px 0;
+  box-shadow: 0 6px 16px rgba(15,23,42,0.09);
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s;
+}
+
+.dark-mode .section {
+  background: var(--card-dark);
+  color: var(--text-dark);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+}
+
+.section h2 {
+  margin-top: 0;
+  color: #1b1f3b;
+  font-size: 22px;
+}
+
+.dark-mode .section h2 {
+  color: #e5f5ff;
+}
+
+/* ------------------------------
+   LISTS & BADGES
+--------------------------------*/
+ul {
+  padding-left: 18px;
+  margin: 10px 0 0;
+}
+
+.badge {
+  display: inline-block;
+  background: rgba(76,201,240,0.12);
+  color: #1b1f3b;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 6px;
+  margin-bottom: 4px;
+}
+
+.dark-mode .badge {
+  background: rgba(59,201,219,0.13);
+  color: #c7e9ff;
+  border: 1px solid rgba(149,213,255,0.25);
+}
+
+/* ------------------------------
+   CODE / PROMPT BLOCK
+--------------------------------*/
+pre {
+  background: #ececf5;
+  padding: 14px;
+  border-radius: 10px;
+  white-space: pre-wrap;
+  font-size: 13px;
+  border: 1px solid rgba(15,23,42,0.12);
+}
+
+.dark-mode pre {
+  background: #181c2b;
+  color: #e0e4ff;
+  border-color: rgba(148,163,255,0.35);
+}
+
+/* ------------------------------
+   RESPONSIVE
+--------------------------------*/
+@media (max-width: 600px) {
+  #hero-title {
+    font-size: 24px;
+  }
+  .section {
+    padding: 20px 16px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<header>
-    <h1 id="title">Career Clarity Program (AI Coach)</h1>
-</header>
-
-<div class="language-switch">
-    <button onclick="switchLanguage()">FR / EN</button>
+<!-- TOP BAR: LANGUAGE + THEME -->
+<div class="top-controls">
+  <button id="lang-en-btn" onclick="setLanguage('en')">EN</button>
+  <button id="lang-fr-btn" onclick="setLanguage('fr')">FR</button>
+  <button id="darkToggle" onclick="toggleDarkMode()">🌙 / ☀</button>
 </div>
+
+<!-- HERO -->
+<header>
+  <h1 id="hero-title">Career Clarity AI Coach</h1>
+  <p id="hero-subtitle">A 5-session, structured career program powered by coaching psychology and top career frameworks.</p>
+  <div class="hero-buttons">
+    <button onclick="copyPrompt()">📋 Copy Start Prompt</button>
+    <a href="#how-it-works" class="button">🔎 How it works</a>
+  </div>
+</header>
 
 <div class="container">
 
-    <!-- INTRO -->
-    <div class="section">
-        <h2 id="intro-title">Welcome!</h2>
-        <p id="intro-text">
-            This page allows you to begin the full 5-Session Career Clarity Program, guided step-by-step by an AI Career Coach.
-        </p>
-    </div>
+  <!-- ABOUT / WHY RELEVANT -->
+  <section class="section" id="about-section">
+    <h2 id="about-title">Why this AI agent is relevant</h2>
+    <p id="about-text">
+      This AI Career Coach doesn’t give random job lists. It guides you through a structured, human-centered process used by top career coaches and transition experts.
+    </p>
+    <p id="about-based-on">
+      It is inspired by tools and approaches from:
+    </p>
+    <ul id="about-list">
+      <li>Modern career reinvention work (Kathy Caprino and others)</li>
+      <li>“What Color Is Your Parachute?” by Richard Bolles – strengths & experiments</li>
+      <li>ICF coaching principles – powerful questions, active listening, ethics</li>
+      <li>McKinsey-style career architecture – role systems, skills, value creation</li>
+      <li>Strengths-based coaching and positive psychology</li>
+    </ul>
+    <p id="about-result">
+      The agent uses targeted, deep questions to help you clarify your energy, strengths, values, work style and ideal direction – then turns that into a realistic 90-day plan.
+    </p>
+  </section>
 
-    <!-- WHAT IS THIS PROGRAM -->
-    <div class="section">
-        <h2 id="what-title">What is the Program?</h2>
-        <p id="what-text">
-            The Career Clarity Program consists of 5 structured sessions:
-            <br><br>
-            1️⃣ SPARK — Motivation & Energy<br>
-            2️⃣ SHAPE — Strengths & Natural Talents<br>
-            3️⃣ SHIFT — What Needs to Change<br>
-            4️⃣ SYSTEMS — Choosing Career Paths<br>
-            5️⃣ SOAR — Ideal Identity & 90-day Plan<br><br>
-            It is 100% guided and interactive.
-        </p>
-    </div>
+  <!-- HOW TO START -->
+  <section class="section">
+    <h2 id="start-title">How to start (copy–paste)</h2>
+    <p id="start-text">
+      Open ChatGPT, start a new conversation and paste the exact text below. The AI will automatically launch Session 1 and guide you through all 5 sessions.
+    </p>
+    <pre id="prompt-block">
+I want to start the full 5-session Career Clarity Program (SPARK, SHAPE, SHIFT, SYSTEMS, SOAR).
+Please start with Session 1 and ask me the questions in multiple-choice format, and wait for my answers before moving to the next session.
+    </pre>
+    <button onclick="copyPrompt()">📋 Copy Start Prompt</button>
+  </section>
 
-    <!-- HOW TO START -->
-    <div class="section">
-        <h2 id="start-title">Start the Program</h2>
-        <p id="start-text">
-            Copy and paste the message below into ChatGPT to start Session 1 instantly:
-        </p>
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how-it-works">
+    <h2 id="how-title">How the 5-session program works</h2>
+    <p id="how-text">
+      The AI coach will take you through five structured sessions. Each one builds on the previous to give you clarity and a concrete next step.
+    </p>
+    <ul id="how-list">
+      <li><strong>SPARK</strong> – Identify what energizes you, what drains you, and what truly matters to you at this stage of life.</li>
+      <li><strong>SHAPE</strong> – Map your strengths, talents, patterns, and unique value in real situations.</li>
+      <li><strong>SHIFT</strong> – Clarify what must change in your work and what direction actually feels aligned.</li>
+      <li><strong>SYSTEMS</strong> – Explore different career “systems” (coaching, strategy, tech, product, entrepreneurship, etc.) and see which ones fit you best.</li>
+      <li><strong>SOAR</strong> – Define your future professional identity, your 1-year direction, and a focused 90-day action plan.</li>
+    </ul>
+  </section>
 
-        <pre id="start-box">
-I want to start the full 5-session Career Clarity Program (SPARK, SHAPE, SHIFT, SYSTEMS, SOAR). 
-Please start with Session 1 and ask me the questions using multiple-choice format.
-        </pre>
+  <!-- WHO IT'S FOR -->
+  <section class="section">
+    <h2 id="who-title">Who is this for?</h2>
+    <p id="who-text">
+      This AI career agent is designed for people who:
+    </p>
+    <ul id="who-list">
+      <li>Like many things and struggle to choose a single path</li>
+      <li>Are multi-potential, curious, and don’t fit in a narrow box</li>
+      <li>Feel stuck, bored or misaligned in their current job</li>
+      <li>Want a more meaningful, strategic, or human-centered role</li>
+      <li>Prefer deep, structured questions instead of generic advice</li>
+    </ul>
+    <p id="who-final">
+      You don’t need to know “what you want to do” to start. The program is made precisely for people who are unsure, overwhelmed, or in transition.
+    </p>
+  </section>
 
-        <button onclick="copyText()">Copy Message</button>
-    </div>
-
-    <!-- FOLLOW-UP -->
-    <div class="section">
-        <h2 id="follow-title">What Happens Next?</h2>
-        <p id="follow-text">
-            The AI Coach will guide you step-by-step through all 5 sessions and build:
-            <br><br>
-            ✔ Your career identity<br>
-            ✔ Your strengths profile<br>
-            ✔ Your aligned career paths<br>
-            ✔ Your transformation direction<br>
-            ✔ Your 90-day action plan<br>
-        </p>
-    </div>
+  <!-- WHAT YOU GET -->
+  <section class="section">
+    <h2 id="gain-title">What you’ll walk away with</h2>
+    <p id="gain-text">
+      At the end of the 5 sessions, you will have:
+    </p>
+    <ul id="gain-list">
+      <li>A clearer picture of your strengths, style and values</li>
+      <li>2–3 career directions that truly fit who you are</li>
+      <li>A language to describe your profile to employers or coaches</li>
+      <li>A realistic 90-day action plan to test, learn and move forward</li>
+      <li>The option to reuse the process later when your life evolves</li>
+    </ul>
+    <span class="badge" id="badge-confidential">Confidential · Self-paced · Reusable</span>
+  </section>
 
 </div>
 
 <script>
-let language = "EN";
-
-function switchLanguage() {
-    if (language === "EN") {
-        language = "FR";
-        document.getElementById("title").innerText = "Programme de Clarté Professionnelle (Coach IA)";
-        document.getElementById("intro-title").innerText = "Bienvenue !";
-        document.getElementById("intro-text").innerText =
-            "Cette page vous permet de commencer le Programme complet de Clarté Professionnelle en 5 sessions, guidé par un Coach IA.";
-        document.getElementById("what-title").innerText = "Qu’est-ce que le programme ?";
-        document.getElementById("what-text").innerHTML =
-            "Le programme comporte 5 sessions structurées :<br><br>" +
-            "1️⃣ SPARK — Motivation & Énergie<br>" +
-            "2️⃣ SHAPE — Forces & Talents<br>" +
-            "3️⃣ SHIFT — Ce qui doit changer<br>" +
-            "4️⃣ SYSTEMS — Choix des domaines professionnels<br>" +
-            "5️⃣ SOAR — Identité & Plan sur 90 jours<br><br>" +
-            "Tout est guidé et interactif.";
-        document.getElementById("start-title").innerText = "Commencer le programme";
-        document.getElementById("start-text").innerText =
-            "Copiez et collez le message ci-dessous dans ChatGPT pour commencer la Session 1 immédiatement :";
-        document.getElementById("start-box").innerText =
-            "I want to start the full 5-session Career Clarity Program (SPARK, SHAPE, SHIFT, SYSTEMS, SOAR). \nPlease start with Session 1 and ask me the questions using multiple-choice format.";
-        document.getElementById("follow-title").innerText = "Et après ?";
-        document.getElementById("follow-text").innerHTML =
-            "Le Coach IA vous guidera pas à pas dans les 5 sessions et construira :<br><br>" +
-            "✔ Votre identité professionnelle<br>" +
-            "✔ Vos forces et talents<br>" +
-            "✔ Vos pistes de carrière alignées<br>" +
-            "✔ Votre direction de transformation<br>" +
-            "✔ Votre plan d’action sur 90 jours<br>";
-    } else {
-        language = "EN";
-        location.reload();
-    }
+// DARK MODE
+function toggleDarkMode() {
+  document.documentElement.classList.toggle("dark-mode");
 }
 
-function copyText() {
-    const text = document.getElementById("start-box").innerText;
-    navigator.clipboard.writeText(text).then(() => alert("Copied!"));
+// COPY PROMPT
+function copyPrompt() {
+  const text = document.getElementById("prompt-block").innerText.trim();
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function() {
+      alert("Prompt copied. Open ChatGPT and paste it to start the program.");
+    }, function() {
+      alert("Copy failed. You can manually select and copy the text.");
+    });
+  } else {
+    alert("Your browser does not support automatic copy. Please select and copy the text manually.");
+  }
+}
+
+// LANGUAGE SWITCH
+function setLanguage(lang) {
+  const en = {
+    heroTitle: "Career Clarity AI Coach",
+    heroSubtitle: "A 5-session, structured career program powered by coaching psychology and top career frameworks.",
+    aboutTitle: "Why this AI agent is relevant",
+    aboutText: "This AI Career Coach doesn’t give random job lists. It guides you through a structured, human-centered process used by top career coaches and transition experts.",
+    aboutBasedOn: "It is inspired by tools and approaches from:",
+    aboutResult: "The agent uses targeted, deep questions to help you clarify your energy, strengths, values, work style and ideal direction – then turns that into a realistic 90-day plan.",
+    startTitle: "How to start (copy–paste)",
+    startText: "Open ChatGPT, start a new conversation and paste the exact text below. The AI will automatically launch Session 1 and guide you through all 5 sessions.",
+    howTitle: "How the 5-session program works",
+    howText: "The AI coach will take you through five structured sessions. Each one builds on the previous to give you clarity and a concrete next step.",
+    whoTitle: "Who is this for?",
+    whoText: "This AI career agent is designed for people who:",
+    whoFinal: "You don’t need to know “what you want to do” to start. The program is made precisely for people who are unsure, overwhelmed, or in transition.",
+    gainTitle: "What you’ll walk away with",
+    gainText: "At the end of the 5 sessions, you will have:",
+    badge: "Confidential · Self-paced · Reusable"
+  };
+
+  const fr = {
+    heroTitle: "Coach IA – Clarté de Carrière",
+    heroSubtitle: "Un parcours structuré en 5 sessions, basé sur la psychologie du coaching et les meilleurs outils de carrière.",
+    aboutTitle: "Pourquoi cet agent IA est pertinent",
+    aboutText: "Ce coach de carrière IA ne te donne pas une liste de métiers au hasard. Il te fait passer par un vrai processus structuré, humain, utilisé par les meilleurs coachs de carrière et spécialistes de la transition.",
+    aboutBasedOn: "Il s’inspire d’outils et d’approches comme :",
+    aboutResult: "L’agent utilise des questions ciblées et profondes pour clarifier ton énergie, tes forces, tes valeurs, ton style de travail et la direction idéale – puis les transforme en plan d’action réaliste sur 90 jours.",
+    startTitle: "Comment commencer (copier–coller)",
+    startText: "Ouvre ChatGPT, crée une nouvelle conversation et colle exactement le texte ci-dessous. L’IA lancera automatiquement la Session 1 et t’accompagnera dans les 5 sessions.",
+    howTitle: "Comment fonctionne le programme en 5 sessions",
+    howText: "Le coach IA te fait passer par cinq sessions structurées. Chaque étape s’appuie sur la précédente pour t’apporter de la clarté et un prochain pas concret.",
+    whoTitle: "Pour qui est-ce fait ?",
+    whoText: "Cet agent de carrière IA est conçu pour les personnes qui :",
+    whoFinal: "Tu n’as pas besoin de savoir “ce que tu veux faire” pour commencer. Le programme est justement fait pour ceux qui sont perdus, en transition ou attirés par plusieurs choses.",
+    gainTitle: "Ce que tu auras à la fin",
+    gainText: "À la fin des 5 sessions, tu auras :",
+    badge: "Confidentiel · À ton rythme · Réutilisable"
+  };
+
+  const d = lang === "fr" ? fr : en;
+
+  document.getElementById("hero-title").innerText = d.heroTitle;
+  document.getElementById("hero-subtitle").innerText = d.heroSubtitle;
+
+  document.getElementById("about-title").innerText = d.aboutTitle;
+  document.getElementById("about-text").innerText = d.aboutText;
+  document.getElementById("about-based-on").innerText = d.aboutBasedOn;
+  document.getElementById("about-result").innerText = d.aboutResult;
+
+  document.getElementById("start-title").innerText = d.startTitle;
+  document.getElementById("start-text").innerText = d.startText;
+
+  document.getElementById("how-title").innerText = d.howTitle;
+  document.getElementById("how-text").innerText = d.howText;
+
+  document.getElementById("who-title").innerText = d.whoTitle;
+  document.getElementById("who-text").innerText = d.whoText;
+  document.getElementById("who-final").innerText = d.whoFinal;
+
+  document.getElementById("gain-title").innerText = d.gainTitle;
+  document.getElementById("gain-text").innerText = d.gainText;
+  document.getElementById("badge-confidential").innerText = d.badge;
 }
 </script>
 
